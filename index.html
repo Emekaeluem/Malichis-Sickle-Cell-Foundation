@@ -293,12 +293,13 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 @media (max-width: 400px) {
   .nav-logo img { width: 84px; height: 84px; }
   .nav.scrolled .nav-logo img { width: 74px; height: 74px; }
+  .footer-brand img { width: 72px; height: 72px; }
 }
 
 /* ============================================
    HERO SLIDER
 ============================================ */
-.hero { position: relative; height: 100vh; min-height: 560px; overflow: hidden; background: var(--ink); }
+.hero { position: relative; height: 100vh; min-height: 560px; overflow: hidden; background: #000; }
 .hero-slides { position: relative; width: 100%; height: 100%; }
 .slide {
   position: absolute; inset: 0;
@@ -317,10 +318,10 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 .slide.is-active .slide-bg { transform: scale(1.18); }
 .slide-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(20,5,28,0.55) 0%, rgba(20,5,28,0.72) 55%, rgba(20,5,28,0.88) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.88) 100%);
 }
-.slide-overlay-alt { background: linear-gradient(120deg, rgba(20,5,28,0.8) 10%, rgba(20,5,28,0.5) 60%, rgba(20,5,28,0.82) 100%); }
-.slide-overlay-deep { background: linear-gradient(0deg, rgba(20,5,28,0.9) 0%, rgba(20,5,28,0.55) 50%, rgba(20,5,28,0.78) 100%); }
+.slide-overlay-alt { background: linear-gradient(120deg, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.82) 100%); }
+.slide-overlay-deep { background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.78) 100%); }
 .slide-content {
   position: relative; z-index: 3;
   height: 100%;
@@ -459,16 +460,53 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 /* ============================================
    MISSION
 ============================================ */
-.mission { padding: 40px 0 150px; background: var(--white); }
+.mission { padding: 40px 0 150px; background: var(--purple-tint); }
 .mission-grid { display: grid; grid-template-columns: 1fr 0.9fr; gap: 70px; align-items: center; }
 .mission-tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .mission-tags span {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--purple-tint); color: var(--purple);
+  background: var(--white); color: var(--purple);
   padding: 10px 18px; border-radius: 100px;
   font-weight: 700; font-size: 0.86rem;
+  box-shadow: var(--shadow-soft);
 }
 .mission-tags svg { color: var(--orange); flex-shrink: 0; }
+
+/* Mission photo gallery — floating mosaic grid */
+.mission-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "a a b"
+    "c d b"
+    "e e f";
+  gap: 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.gallery-item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+  animation: galleryFloat 6s ease-in-out infinite;
+  transition: transform 0.4s var(--ease);
+}
+.gallery-item:hover { transform: translateY(-6px); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
+.gallery-item:hover img { transform: scale(1.08); }
+.gi-1 { grid-area: a; aspect-ratio: 16/10; animation-delay: 0s; }
+.gi-2 { grid-area: b; aspect-ratio: 3/5; animation-delay: 1s; }
+.gi-3 { grid-area: c; aspect-ratio: 1/1; animation-delay: 2s; }
+.gi-4 { grid-area: d; aspect-ratio: 1/1; animation-delay: 3s; }
+.gi-5 { grid-area: e; aspect-ratio: 16/10; animation-delay: 4s; }
+.gi-6 { grid-area: f; aspect-ratio: 1/1; animation-delay: 5s; }
+@keyframes galleryFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item { animation: none; }
+}
 .mission-illustration { width: 100%; height: auto; max-width: 420px; margin: 0 auto; display: block; }
 .orbit-slow { animation: orbitSpin 26s linear infinite; }
 @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -478,7 +516,21 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 @media (max-width: 900px) {
   .mission { padding: 20px 0 100px; }
   .mission-grid { grid-template-columns: 1fr; gap: 50px; text-align: left; }
-  .mission-illustration { max-width: 280px; }
+  .mission-gallery { max-width: 420px; }
+}
+
+@media (max-width: 600px) {
+  .mission-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "a a"
+      "c d"
+      "b b"
+      "e f";
+    max-width: 380px;
+    gap: 14px;
+  }
+  .gi-1, .gi-2, .gi-3, .gi-4, .gi-5, .gi-6 { aspect-ratio: 1/1; }
 }
 
 /* ============================================
@@ -619,20 +671,30 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 .donate-head { max-width: 640px; margin: 0 auto 60px; text-align: center; position: relative; z-index: 1; }
 .donate-head .eyebrow { justify-content: center; }
 .donate-head .eyebrow::before { display: none; }
-.donate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; position: relative; z-index: 1; margin-bottom: 56px; }
-.donate-card {
+.donate-flex { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 70px; align-items: center; margin-bottom: 56px; position: relative; z-index: 1; }
+.donate-copy .eyebrow::before { display: none; }
+.donate-copy p { margin: 18px 0 30px; max-width: 460px; }
+.donate-payment {
   background: var(--glass-bg-strong);
   backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  padding: 38px 28px;
+  padding: 40px 36px;
   box-shadow: var(--shadow-soft);
-  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.4s;
   text-align: center;
 }
-.donate-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lift); border-color: rgba(255,111,13,0.4); }
-.donate-card .amount { font-size: 1.7rem; font-weight: 800; color: var(--purple); margin-bottom: 10px; }
-.donate-card p { font-size: 0.92rem; margin-bottom: 20px; }
+.donate-payment h3 { margin-bottom: 22px; }
+.donate-payment-logos { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.pay-badge {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 16px 22px;
+  box-shadow: var(--shadow-soft);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.pay-badge:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); }
+.pay-badge img { height: 32px; width: auto; object-fit: contain; }
 .donate-actions { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; margin-bottom: 50px; }
 .trust-badges { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
 .trust-badge { display: flex; align-items: center; gap: 10px; color: var(--ink-soft); font-weight: 600; font-size: 0.9rem; }
@@ -640,10 +702,13 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 
 @media (max-width: 900px) {
   .donate { padding: 100px 0; }
-  .donate-grid { grid-template-columns: repeat(2, 1fr); }
+  .donate-flex { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+  .donate-copy p { margin-left: auto; margin-right: auto; }
 }
 @media (max-width: 520px) {
-  .donate-grid { grid-template-columns: 1fr; gap: 16px; }
+  .donate-payment { padding: 32px 24px; }
+  .donate-payment-logos { gap: 12px; }
+  .pay-badge { padding: 12px 16px; }
   .donate-actions { flex-direction: column; align-items: stretch; }
   .donate-actions .btn { width: 100%; }
   .trust-badges { gap: 18px 26px; }
@@ -731,21 +796,39 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 .contact-list strong { display: block; color: var(--ink); font-size: 0.98rem; margin-bottom: 2px; }
 .contact-list a, .contact-list span.detail { color: var(--ink-soft); font-size: 0.94rem; }
 .contact-list a:hover { color: var(--orange-dark); }
-.contact-map-art { display: flex; align-items: center; justify-content: center; }
-.contact-map-art svg { width: 100%; max-width: 320px; height: auto; }
+.contact-form { display: flex; flex-direction: column; justify-content: center; }
+.contact-form h3 { margin-bottom: 20px; }
+.contact-form .form-row { margin-bottom: 16px; }
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--lavender-deep);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.contact-form textarea { min-height: 130px; resize: vertical; }
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--ink-faint); }
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px rgba(104,0,130,0.1);
+}
+.contact-form-note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 14px; text-align: center; }
 
 @media (max-width: 900px) {
   .contact { padding: 90px 0; }
   .contact-card { grid-template-columns: 1fr; padding: 40px 28px; gap: 40px; }
-  .contact-map-art { order: -1; }
-  .contact-map-art svg { max-width: 200px; }
 }
 
 @media (max-width: 480px) {
   .contact-card { padding: 32px 20px; border-radius: var(--radius-lg); }
-  .contact-map-art svg { max-width: 150px; }
   .contact-list li { gap: 12px; }
   .contact-list .c-icon { width: 42px; height: 42px; border-radius: 12px; }
+  .contact-form input, .contact-form textarea { padding: 13px 16px; }
 }
 
 /* ============================================
@@ -754,7 +837,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 .footer { background: var(--purple-dark); color: rgba(255,255,255,0.7); padding: 90px 0 30px; scroll-snap-align: start; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 0.8fr 1fr 1.1fr; gap: 50px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.12); }
 .footer-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.15rem; color: var(--white); margin-bottom: 18px; }
-.footer-brand img { width: 52px; height: 52px; object-fit: contain; }
+.footer-brand img { width: 92px; height: 92px; object-fit: contain; }
 .footer p.foot-desc { color: rgba(255,255,255,0.6); font-size: 0.92rem; max-width: 300px; }
 .footer h4 { color: var(--white); font-size: 0.92rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 22px; font-weight: 700; }
 .footer-links { display: flex; flex-direction: column; gap: 13px; }
@@ -1014,23 +1097,15 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
       </div>
     </div>
 
-    <div class="mission-art reveal-scale" aria-hidden="true">
-      <svg viewBox="0 0 420 420" class="mission-illustration">
-        <circle cx="210" cy="210" r="168" fill="none" stroke="var(--purple)" stroke-opacity="0.14" stroke-width="1.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-        <circle cx="210" cy="210" r="120" fill="var(--purple)" fill-opacity="0.05"/>
-        <g class="orbit-slow" style="transform-origin:210px 210px;">
-          <use href="#bloom-shape" x="150" y="4" width="60" height="60" fill="var(--orange)" fill-opacity="0.85"/>
-          <use href="#bloom-shape" x="330" y="150" width="52" height="52" fill="var(--purple)" fill-opacity="0.8"/>
-          <use href="#bloom-shape" x="330" y="300" width="46" height="46" fill="var(--orange)" fill-opacity="0.55"/>
-          <use href="#bloom-shape" x="150" y="356" width="50" height="50" fill="var(--purple-mid)" fill-opacity="0.7"/>
-          <use href="#bloom-shape" x="10" y="290" width="44" height="44" fill="var(--orange)" fill-opacity="0.4"/>
-          <use href="#bloom-shape" x="14" y="140" width="46" height="46" fill="var(--purple)" fill-opacity="0.55"/>
-        </g>
-        <circle cx="210" cy="210" r="72" fill="var(--white)" stroke="var(--purple)" stroke-opacity="0.18" stroke-width="1.5"/>
-        <g transform="translate(178,178)" color="var(--purple)">
-          <svg width="64" height="64"><use href="#icon-hand"/></svg>
-        </g>
-      </svg>
+    <div class="mission-art reveal-scale">
+      <div class="mission-gallery">
+        <div class="gallery-item gi-1"><img src="images/image1.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="gallery-item gi-2"><img src="images/image2.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="gallery-item gi-3"><img src="images/image3.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="gallery-item gi-4"><img src="images/image4.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="gallery-item gi-5"><img src="images/image5.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="gallery-item gi-6"><img src="images/image6.jpg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1156,38 +1231,25 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   <div class="bloom bloom-float-slow" style="width:180px;height:180px;bottom:-30px;right:-40px;color:rgba(255,111,13,0.08);"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
 
   <div class="container">
-    <div class="donate-head reveal">
-      <p class="eyebrow">Give Today</p>
-      <h2>Every Donation Gives Hope</h2>
-      <p>Your generosity helps provide medication, emergency care, awareness campaigns, education, and digital skills training for sickle cell warriors.</p>
-    </div>
+    <div class="donate-flex">
+      <div class="donate-copy reveal">
+        <p class="eyebrow">Give Today</p>
+        <h2>Every Donation Gives Hope</h2>
+        <p>Your generosity helps provide medication, emergency care, awareness campaigns, education, and digital skills training for sickle cell warriors.</p>
+        <div class="donate-actions" style="justify-content:flex-start; margin-bottom:0;">
+          <a href="#contact" class="btn btn-primary">Donate Now</a>
+          <a href="#contact" class="btn btn-ghost-purple">Become a Partner</a>
+        </div>
+      </div>
 
-    <div class="donate-grid stagger">
-      <div class="donate-card reveal" style="--i:0">
-        <div class="amount">₦5,000</div>
-        <p>Supports essential medication.</p>
-        <a href="#contact" class="btn btn-ghost-purple btn-sm" style="width:100%;">Give ₦5,000</a>
+      <div class="donate-payment reveal-scale">
+        <h3>Payment Secured</h3>
+        <div class="donate-payment-logos">
+          <div class="pay-badge"><img src="images/pay1.png" alt="Accepted secure payment method" loading="lazy"></div>
+          <div class="pay-badge"><img src="images/pay2.png" alt="Accepted secure payment method" loading="lazy"></div>
+          <div class="pay-badge"><img src="images/pay3.png" alt="Accepted secure payment method" loading="lazy"></div>
+        </div>
       </div>
-      <div class="donate-card reveal" style="--i:1">
-        <div class="amount">₦10,000</div>
-        <p>Supports awareness campaigns.</p>
-        <a href="#contact" class="btn btn-ghost-purple btn-sm" style="width:100%;">Give ₦10,000</a>
-      </div>
-      <div class="donate-card reveal" style="--i:2">
-        <div class="amount">₦25,000</div>
-        <p>Supports emergency healthcare.</p>
-        <a href="#contact" class="btn btn-ghost-purple btn-sm" style="width:100%;">Give ₦25,000</a>
-      </div>
-      <div class="donate-card reveal" style="--i:3">
-        <div class="amount">₦50,000+</div>
-        <p>Supports life-changing interventions.</p>
-        <a href="#contact" class="btn btn-ghost-purple btn-sm" style="width:100%;">Give ₦50,000+</a>
-      </div>
-    </div>
-
-    <div class="donate-actions reveal">
-      <a href="#contact" class="btn btn-primary">Donate Now</a>
-      <a href="#contact" class="btn btn-ghost-purple">Become a Partner</a>
     </div>
 
     <div class="trust-badges reveal">
@@ -1284,14 +1346,28 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
         </ul>
       </div>
 
-      <div class="contact-map-art" aria-hidden="true">
-        <svg viewBox="0 0 300 300">
-          <circle cx="150" cy="150" r="130" fill="var(--purple-tint)"/>
-          <use href="#bloom-shape" x="70" y="70" width="160" height="160" fill="var(--purple)" fill-opacity="0.14"/>
-          <g transform="translate(115,115)" color="var(--purple)">
-            <svg width="70" height="70"><use href="#icon-heart"/></svg>
-          </g>
-        </svg>
+      <div class="contact-form reveal-scale">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm">
+          <div class="form-row">
+            <label for="cName" class="sr-only">Full name</label>
+            <input type="text" id="cName" name="name" placeholder="Full name" required>
+          </div>
+          <div class="form-row">
+            <label for="cEmail" class="sr-only">Email address</label>
+            <input type="email" id="cEmail" name="email" placeholder="Email address" required>
+          </div>
+          <div class="form-row">
+            <label for="cSubject" class="sr-only">Subject</label>
+            <input type="text" id="cSubject" name="subject" placeholder="Subject">
+          </div>
+          <div class="form-row">
+            <label for="cMessage" class="sr-only">Message</label>
+            <textarea id="cMessage" name="message" placeholder="Your message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+          <p class="contact-form-note" id="contactFormNote">We'll get back to you within 1–2 business days.</p>
+        </form>
       </div>
     </div>
   </div>
@@ -1528,6 +1604,17 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
     newsletterNote.textContent = 'Thank you for subscribing! We\u2019ll keep you updated.';
     newsletterForm.reset();
   });
+
+  /* ---------- Contact Form (front-end only demo) ---------- */
+  var contactForm = document.getElementById('contactForm');
+  var contactFormNote = document.getElementById('contactFormNote');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      contactFormNote.textContent = 'Thank you! Your message has been received \u2014 we\u2019ll be in touch soon.';
+      contactForm.reset();
+    });
+  }
 
 })();
 </script>
