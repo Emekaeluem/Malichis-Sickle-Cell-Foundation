@@ -415,6 +415,14 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   color: var(--orange-light);
 }
 .hero-content.is-centered .hero-actions { justify-content: center; position: relative; z-index: 2; }
+.hero-content.is-centered .hero-subtext {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.02rem;
+  max-width: 560px;
+  margin: 18px auto 32px;
+  position: relative;
+  z-index: 2;
+}
 
 .hero-bloom-signature {
   position: absolute;
@@ -909,3 +917,114 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 @media (max-width: 400px) {
   .container { padding: 0 16px; }
 }
+
+/* ============================================
+   ABOUT PAGE — EMOTIONAL TEXT BLOCK
+   (Human Side of Sickle Cell / Message of Hope)
+============================================ */
+.text-emotion { padding: 130px 0; }
+.text-emotion .container { max-width: 760px; text-align: center; }
+.text-emotion .eyebrow { justify-content: center; }
+.text-emotion .eyebrow::before { display: none; }
+.text-emotion p { font-size: 1.12rem; margin-bottom: 18px; }
+.text-emotion .closing-line { font-weight: 700; color: var(--purple); font-size: 1.25rem; margin-top: 14px; }
+.human-side { background: var(--lavender); }
+.hope-message { background: var(--bg-soft); }
+
+/* ============================================
+   ABOUT PAGE — VIDEO FEATURE
+   (Education / Visit / Help)
+============================================ */
+.video-feature { padding: 130px 0; overflow: hidden; }
+.video-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+.video-feature-grid.is-reversed .video-feature-media { order: -1; }
+.video-feature-copy .eyebrow::before { display: none; }
+.video-feature-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+  aspect-ratio: 16/11;
+  background: #000;
+}
+.video-feature-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 0.8rem; color: var(--orange-dark); margin-top: 14px;
+}
+.mini-cta svg { flex-shrink: 0; }
+.edu-video { background: var(--white); }
+.visit-video { background: var(--lavender); }
+.help-video { background: var(--bg-soft); }
+
+@media (max-width: 900px) {
+  .video-feature { padding: 90px 0; }
+  .video-feature-grid { grid-template-columns: 1fr; gap: 40px; }
+  .video-feature-grid.is-reversed .video-feature-media { order: 0; }
+}
+
+/* ============================================
+   ABOUT PAGE — VALUES (reuses .why-card)
+============================================ */
+.values-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+@media (max-width: 1000px) { .values-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 620px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px) { .values-grid { grid-template-columns: 1fr; } }
+
+/* ============================================
+   ABOUT PAGE — TEAM
+============================================ */
+.team { padding: 130px 0; background: var(--white); }
+.team-head { max-width: 620px; margin: 0 auto 60px; text-align: center; }
+.team-head .eyebrow { justify-content: center; }
+.team-head .eyebrow::before { display: none; }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+.team-card {
+  background: var(--lavender);
+  border-radius: var(--radius-lg);
+  padding: 34px 26px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lift); }
+.team-photo {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  background: var(--purple-tint);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--purple);
+  font-weight: 800; font-size: 1.6rem;
+}
+.team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.team-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.team-role { color: var(--orange-dark); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; display: block; }
+.team-card .bio { font-size: 0.9rem; }
+
+/* ============================================
+   ABOUT PAGE — PARTNERS
+============================================ */
+.partners { padding: 110px 0; background: var(--lavender); }
+.partners-head { max-width: 600px; margin: 0 auto 50px; text-align: center; }
+.partners-head .eyebrow { justify-content: center; }
+.partners-head .eyebrow::before { display: none; }
+.partners-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; align-items: center; }
+.partner-logo {
+  width: 150px; height: 76px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white);
+  border: 1.5px dashed var(--lavender-deep);
+  border-radius: var(--radius-md);
+  color: var(--ink-faint);
+  font-size: 0.76rem; font-weight: 700;
+  text-align: center; padding: 10px;
+}
+
+/* ============================================
+   ABOUT PAGE — DONATE VISUAL
+============================================ */
+.donate-visual { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lift); aspect-ratio: 4/3; }
+.donate-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
