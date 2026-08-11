@@ -515,6 +515,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   will-change: transform;
 }
 .mg-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
+.mg-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mg-item:hover img { transform: scale(1.1); }
 .mg-item:nth-child(3n+2) { margin-top: 36px; }
 .mg-item:nth-child(odd) { animation: mgFloat 7s ease-in-out infinite; }
@@ -1025,3 +1026,32 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 ============================================ */
 .donate-visual { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lift); aspect-ratio: 4/3; }
 .donate-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ============================================
+   SIMPLE PAGE HEADING (Donate page)
+============================================ */
+.page-head { padding: 170px 0 70px; background: var(--white); text-align: center; }
+.page-head .container { max-width: 680px; }
+.page-head .eyebrow { justify-content: center; }
+.page-head .eyebrow::before { display: none; }
+.page-head p { font-size: 1.05rem; margin-top: 14px; }
+
+/* ============================================
+   DONATE PAGE — FLOATING GALLERY
+============================================ */
+.donate-gallery-section { padding: 30px 0 100px; background: var(--white); }
+.donate-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.donate-gallery .mg-item:nth-child(even) { margin-top: 30px; }
+@media (max-width: 820px) {
+  .donate-gallery { grid-template-columns: repeat(2, 1fr); max-width: 560px; }
+}
+@media (max-width: 480px) {
+  .donate-gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .donate-gallery .mg-item:nth-child(even) { margin-top: 14px; }
+}
