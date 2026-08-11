@@ -91,6 +91,22 @@
   }
 
 
+  /* ---------- Feature Videos (About page) — play only when in view ---------- */
+  var featureVideos = Array.prototype.slice.call(document.querySelectorAll('.feature-video'));
+  if (featureVideos.length) {
+    if ('IntersectionObserver' in window) {
+      var featureVideoIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.play().catch(function () {}); }
+          else { entry.target.pause(); }
+        });
+      }, { threshold: 0.35 });
+      featureVideos.forEach(function (v) { featureVideoIO.observe(v); });
+    } else {
+      featureVideos.forEach(function (v) { v.play().catch(function () {}); });
+    }
+  }
+
   /* ---------- Bloom Signature (About page hero) ---------- */
   var bloomPath = document.getElementById('bloomSignaturePath');
   if (bloomPath) {
