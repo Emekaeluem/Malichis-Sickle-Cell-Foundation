@@ -392,21 +392,48 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   .hero-content { padding-top: 60px; }
 }
 
-/* About Us hero — centered layout, lighter font, minimal content */
+/* About Us hero — centered layout, brand typography, bloom-signature motif */
 .hero-content.is-centered {
   align-items: center;
   text-align: center;
-  max-width: 900px;
+  max-width: 780px;
   margin: 0 auto;
+  position: relative;
 }
 .hero-content.is-centered .hero-title {
   align-items: center;
-  font-family: 'General Sans', var(--font-display);
+  font-size: clamp(1.5rem, 2.9vw, 2.4rem);
   font-weight: 500;
-  font-size: clamp(1.3rem, 2.4vw, 2.1rem);
   letter-spacing: -0.005em;
+  position: relative;
+  z-index: 2;
 }
-.hero-content.is-centered .hero-actions { justify-content: center; }
+.hero-content.is-centered .hero-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--orange-light);
+}
+.hero-content.is-centered .hero-actions { justify-content: center; position: relative; z-index: 2; }
+
+.hero-bloom-signature {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 520px; height: 520px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-bloom-signature svg { width: 100%; height: 100%; overflow: visible; }
+.hero-bloom-signature path {
+  fill: none;
+  stroke: url(#bloomSignatureGradient);
+  stroke-width: 1;
+  opacity: 0;
+}
+@media (max-width: 620px) {
+  .hero-bloom-signature { width: 340px; height: 340px; }
+}
 
 /* ============================================
    ABOUT
