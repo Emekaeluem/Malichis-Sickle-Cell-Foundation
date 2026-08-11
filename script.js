@@ -37,65 +37,59 @@
     a.addEventListener('click', closeMenu);
   });
 
-  /* ---------- Hero Slider ---------- */
-  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
-  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
-  var current = 0;
-  var slideTimer = null;
-  var SLIDE_DURATION = 9500;
+  /* ---------- Hero Video ---------- */
+  var heroSection = document.querySelector('.hero');
+  var heroVideo = document.getElementById('heroVideo');
+  var soundToggle = document.getElementById('soundToggle');
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function goTo(index) {
-    if (index === current) return;
-    slides[current].classList.remove('is-active');
-    dots[current].classList.remove('is-active');
-    dots[current].setAttribute('aria-selected', 'false');
-    current = (index + slides.length) % slides.length;
-    slides[current].classList.add('is-active');
-    dots[current].classList.add('is-active');
-    dots[current].setAttribute('aria-selected', 'true');
-  }
-  function next() { goTo(current + 1); }
-  function prev() { goTo(current - 1); }
-  function startAuto() {
-    stopAuto();
-    slideTimer = setInterval(next, SLIDE_DURATION);
-  }
-  function stopAuto() {
-    if (slideTimer) clearInterval(slideTimer);
+  function setSoundState(isOn) {
+    soundToggle.classList.toggle('is-unmuted', isOn);
+    soundToggle.setAttribute('aria-pressed', String(isOn));
+    soundToggle.setAttribute('aria-label', isOn ? 'Turn video sound off' : 'Turn video sound on');
   }
 
-  document.getElementById('heroNext').addEventListener('click', function () { next(); startAuto(); });
-  document.getElementById('heroPrev').addEventListener('click', function () { prev(); startAuto(); });
-  dots.forEach(function (dot) {
-    dot.addEventListener('click', function () {
-      goTo(parseInt(dot.getAttribute('data-goto'), 10));
-      startAuto();
-    });
+  /* Try to start the video WITH sound. Browsers only allow this in limited
+     cases (e.g. the visitor has interacted with this site before) — if the
+     browser blocks it, we fall back to muted playback and let the visitor
+     opt in with one tap. */
+  function tryUnmutedAutoplay() {
+    heroVideo.muted = false;
+    var playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(function () {
+        setSoundState(!heroVideo.muted);
+      }).catch(function () {
+        heroVideo.muted = true;
+        heroVideo.play();
+        setSoundState(false);
+      });
+    } else {
+      setSoundState(!heroVideo.muted);
+    }
+  }
+  tryUnmutedAutoplay();
+
+  soundToggle.addEventListener('click', function () {
+    heroVideo.muted = !heroVideo.muted;
+    if (!heroVideo.muted) { heroVideo.play(); }
+    setSoundState(!heroVideo.muted);
   });
 
-  var heroSection = document.querySelector('.hero');
-  heroSection.addEventListener('mouseenter', stopAuto);
-  heroSection.addEventListener('mouseleave', startAuto);
-  startAuto();
-
-  /* Mouse parallax on hero content */
-  var heroSlides = document.getElementById('heroSlides');
-  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!prefersReduced) {
+  /* Mouse parallax on hero text */
+  var heroContentEl = document.querySelector('.hero-content');
+  if (!prefersReduced && heroContentEl) {
     heroSection.addEventListener('mousemove', function (e) {
       var rect = heroSection.getBoundingClientRect();
       var relX = (e.clientX - rect.left) / rect.width - 0.5;
       var relY = (e.clientY - rect.top) / rect.height - 0.5;
-      var activeContent = heroSlides.querySelector('.slide.is-active .slide-content');
-      if (activeContent) {
-        activeContent.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
-      }
+      heroContentEl.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
     });
     heroSection.addEventListener('mouseleave', function () {
-      var activeContent = heroSlides.querySelector('.slide.is-active .slide-content');
-      if (activeContent) activeContent.style.transform = 'translate(0,0)';
+      heroContentEl.style.transform = 'translate(0,0)';
     });
   }
+
 
   /* ---------- Scroll Parallax ---------- */
   /* Elements marked data-parallax-speed drift as the page scrolls, layered depth
