@@ -91,6 +91,24 @@
   }
 
 
+  /* ---------- Bloom Signature (About page hero) ---------- */
+  var bloomPath = document.getElementById('bloomSignaturePath');
+  if (bloomPath) {
+    var bloomLen = bloomPath.getTotalLength();
+    bloomPath.style.strokeDasharray = bloomLen;
+    bloomPath.style.strokeDashoffset = bloomLen;
+    if (prefersReduced) {
+      bloomPath.style.opacity = '0.5';
+      bloomPath.style.strokeDashoffset = '0';
+    } else {
+      requestAnimationFrame(function () {
+        bloomPath.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(.16,.84,.44,1), opacity 1s ease';
+        bloomPath.style.opacity = '0.5';
+        bloomPath.style.strokeDashoffset = '0';
+      });
+    }
+  }
+
   /* ---------- Scroll Parallax ---------- */
   /* Elements marked data-parallax-speed drift as the page scrolls, layered depth
      effect (no external library needed). Speed is a small multiplier — higher
