@@ -43,51 +43,55 @@
   var soundToggle = document.getElementById('soundToggle');
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function setSoundState(isOn) {
-    soundToggle.classList.toggle('is-unmuted', isOn);
-    soundToggle.setAttribute('aria-pressed', String(isOn));
-    soundToggle.setAttribute('aria-label', isOn ? 'Turn video sound off' : 'Turn video sound on');
-  }
+  if (heroSection && heroVideo && soundToggle) {
+    (function () {
+      function setSoundState(isOn) {
+        soundToggle.classList.toggle('is-unmuted', isOn);
+        soundToggle.setAttribute('aria-pressed', String(isOn));
+        soundToggle.setAttribute('aria-label', isOn ? 'Turn video sound off' : 'Turn video sound on');
+      }
 
-  /* Try to start the video WITH sound. Browsers only allow this in limited
-     cases (e.g. the visitor has interacted with this site before) — if the
-     browser blocks it, we fall back to muted playback and let the visitor
-     opt in with one tap. */
-  function tryUnmutedAutoplay() {
-    heroVideo.muted = false;
-    var playPromise = heroVideo.play();
-    if (playPromise && typeof playPromise.then === 'function') {
-      playPromise.then(function () {
+      /* Try to start the video WITH sound. Browsers only allow this in limited
+         cases (e.g. the visitor has interacted with this site before) — if the
+         browser blocks it, we fall back to muted playback and let the visitor
+         opt in with one tap. */
+      function tryUnmutedAutoplay() {
+        heroVideo.muted = false;
+        var playPromise = heroVideo.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(function () {
+            setSoundState(!heroVideo.muted);
+          }).catch(function () {
+            heroVideo.muted = true;
+            heroVideo.play();
+            setSoundState(false);
+          });
+        } else {
+          setSoundState(!heroVideo.muted);
+        }
+      }
+      tryUnmutedAutoplay();
+
+      soundToggle.addEventListener('click', function () {
+        heroVideo.muted = !heroVideo.muted;
+        if (!heroVideo.muted) { heroVideo.play(); }
         setSoundState(!heroVideo.muted);
-      }).catch(function () {
-        heroVideo.muted = true;
-        heroVideo.play();
-        setSoundState(false);
       });
-    } else {
-      setSoundState(!heroVideo.muted);
-    }
-  }
-  tryUnmutedAutoplay();
 
-  soundToggle.addEventListener('click', function () {
-    heroVideo.muted = !heroVideo.muted;
-    if (!heroVideo.muted) { heroVideo.play(); }
-    setSoundState(!heroVideo.muted);
-  });
-
-  /* Mouse parallax on hero text */
-  var heroContentEl = document.querySelector('.hero-content');
-  if (!prefersReduced && heroContentEl) {
-    heroSection.addEventListener('mousemove', function (e) {
-      var rect = heroSection.getBoundingClientRect();
-      var relX = (e.clientX - rect.left) / rect.width - 0.5;
-      var relY = (e.clientY - rect.top) / rect.height - 0.5;
-      heroContentEl.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
-    });
-    heroSection.addEventListener('mouseleave', function () {
-      heroContentEl.style.transform = 'translate(0,0)';
-    });
+      /* Mouse parallax on hero text */
+      var heroContentEl = document.querySelector('.hero-content');
+      if (!prefersReduced && heroContentEl) {
+        heroSection.addEventListener('mousemove', function (e) {
+          var rect = heroSection.getBoundingClientRect();
+          var relX = (e.clientX - rect.left) / rect.width - 0.5;
+          var relY = (e.clientY - rect.top) / rect.height - 0.5;
+          heroContentEl.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
+        });
+        heroSection.addEventListener('mouseleave', function () {
+          heroContentEl.style.transform = 'translate(0,0)';
+        });
+      }
+    })();
   }
 
 
@@ -233,6 +237,20 @@
       e.preventDefault();
       contactFormNote.textContent = 'Thank you for reaching out! We\u2019ll get back to you soon.';
       contactForm.reset();
+    });
+  }
+
+  /* ---------- Donate Form (front-end only demo) ---------- */
+  var donateForm = document.getElementById('donateForm');
+  var donateFormNote = document.getElementById('donateFormNote');
+  if (donateForm) {
+    donateForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var amount = document.getElementById('donorAmount').value;
+      donateFormNote.textContent = amount
+        ? 'Thank you! Redirecting you to complete your \u20a6' + amount + ' donation securely.'
+        : 'Thank you! Redirecting you to complete your donation securely.';
+      donateForm.reset();
     });
   }
 
