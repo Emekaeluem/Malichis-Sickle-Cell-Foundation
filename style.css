@@ -1188,3 +1188,30 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   .donate-tabs { gap: 8px; }
   .donate-tab { padding: 9px 16px; font-size: 0.8rem; }
 }
+
+/* ============================================
+   CONTACT PAGE — extra clearance since it's the
+   first section on the page (no hero above it)
+============================================ */
+.contact.contact-page { padding-top: 170px; }
+
+/* ============================================
+   MAP SECTION
+============================================ */
+.map-section { padding: 20px 0 130px; background: var(--lavender); }
+.map-head { max-width: 600px; margin: 0 auto 40px; text-align: center; }
+.map-head .eyebrow { justify-content: center; }
+.map-head .eyebrow::before { display: none; }
+.map-frame {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+  line-height: 0;
+}
+.map-frame iframe { display: block; width: 100%; }
+
+@media (max-width: 640px) {
+  .contact.contact-page { padding-top: 130px; }
+  .map-section { padding: 10px 0 90px; }
+  .map-frame iframe { height: 320px; }
+}
