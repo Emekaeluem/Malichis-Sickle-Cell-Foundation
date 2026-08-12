@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us | Malichis Sickle Cell Foundation</title>
-<meta name="description" content="Learn the story behind Malichis Sickle Cell Foundation — why it started, who it serves, and the warriors who make the work worth continuing.">
+<title>Malichis Sickle Cell Foundation | Supporting Warriors, Spreading Hope</title>
+<meta name="description" content="Malichis Sickle Cell Foundation supports sickle cell warriors in Lagos, Nigeria through awareness, advocacy, medical assistance, and digital empowerment.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="images/malichis.jpeg" fetchpriority="high">
 </head>
 <body>
 
@@ -56,15 +57,15 @@
 ============================================ -->
 <header class="nav" id="siteNav">
   <div class="container nav-inner">
-    <a href="index.html#home" class="nav-logo" aria-label="Malichis Sickle Cell Foundation — Home">
+    <a href="#home" class="nav-logo" aria-label="Malichis Sickle Cell Foundation — Home">
       <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo" width="110" height="110">
     </a>
 
     <nav class="nav-menu" id="navMenu" aria-label="Primary">
       <div class="nav-menu-bloom" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
-      <a href="index.html#home">Home</a>
-      <a href="about.html" aria-current="page">About</a>
-      <a href="index.html#vision">Event</a>
+      <a href="#home">Home</a>
+      <a href="about.html">About</a>
+      <a href="#vision">Event</a>
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact us</a>
     </nav>
@@ -85,113 +86,147 @@
 <main id="main">
 
 <!-- ============================================
-     HERO VIDEO
+     HERO SLIDER
 ============================================ -->
 <section class="hero" id="home" aria-label="Introduction">
-  <div class="hero-video-layer" data-parallax-speed="0.08">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="images/malichis4.jpg">
-      <source src="images/videom.mp4" type="video/mp4">
-    </video>
+  <div class="hero-slides" id="heroSlides">
+
+    <article class="slide is-active" data-slide="0">
+      <div class="hero-video-layer" data-parallax-speed="0.08">
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" fetchpriority="high" poster="images/malichis.jpeg">
+          <source src="images/hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="container hero-content">
+        <p class="eyebrow eyebrow-light">Malichis Sickle Cell Foundation</p>
+        <h1 class="hero-title">
+          <span>Supporting Warriors.</span>
+          <span>Spreading Hope.</span>
+          <span>Inspiring Change.</span>
+        </h1>
+        <p class="hero-body">For almost half a decade, Malichis Sickle Cell Foundation has supported sickle cell warriors through awareness, advocacy, medical assistance, and empowerment.</p>
+        <div class="hero-actions">
+          <a href="donate.html" class="btn btn-primary">Donate Now</a>
+          <a href="about.html" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+      <button class="sound-toggle sound-toggle-home" id="soundToggle" aria-label="Turn video sound on" aria-pressed="false">
+        <svg width="18" height="18" class="icon-muted"><use href="#icon-mute"/></svg>
+        <svg width="18" height="18" class="icon-unmuted"><use href="#icon-unmute"/></svg>
+        <span class="sound-toggle-label">Sound</span>
+      </button>
+    </article>
+
+    <article class="slide" data-slide="1">
+      <div class="slide-bg" style="background-image:url('images/malichis1.jpeg')" role="img" aria-label="A sickle cell warrior, representing the community Malichis supports"></div>
+      <div class="slide-overlay slide-overlay-alt"></div>
+      <div class="container hero-content">
+        <p class="eyebrow eyebrow-light">Our Promise</p>
+        <h1 class="hero-title"><span>Every Warrior Deserves Hope.</span></h1>
+        <p class="hero-body">Together we provide medication, emergency support, awareness campaigns, and opportunities that transform lives.</p>
+        <div class="hero-actions">
+          <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
+          <a href="contact.html" class="btn btn-outline">Become a Volunteer</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide" data-slide="2">
+      <div class="slide-bg" style="background-image:url('images/malichis3.jpeg')" role="img" aria-label="A sickle cell warrior standing strong, representing collective strength"></div>
+      <div class="slide-overlay slide-overlay-deep"></div>
+      <div class="container hero-content">
+        <p class="eyebrow eyebrow-light">Join The Movement</p>
+        <h1 class="hero-title"><span>Together We Can Make Every Warrior Stronger.</span></h1>
+        <p class="hero-body">Join us in creating a future where every sickle cell warrior has access to quality healthcare, dignity, and opportunity.</p>
+        <div class="hero-actions">
+          <a href="donate.html" class="btn btn-primary">Donate Today</a>
+          <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+        </div>
+      </div>
+    </article>
+
   </div>
-  <div class="slide-overlay"></div>
 
-  <div class="container hero-content is-centered">
-    <div class="hero-bloom-signature" aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <defs>
-          <linearGradient id="bloomSignatureGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#c084e8"/>
-            <stop offset="100%" stop-color="#FF9152"/>
-          </linearGradient>
-        </defs>
-        <path id="bloomSignaturePath" d="M100,18 C130,18 138,45 160,52 C185,60 190,90 178,112 C168,130 178,155 158,170 C138,185 115,175 100,182 C85,175 62,185 42,170 C22,155 32,130 22,112 C10,90 15,60 40,52 C62,45 70,18 100,18 Z"/>
-      </svg>
-    </div>
-    <h1 class="hero-title">
-      <span>Every Life Deserves</span>
-      <span>a <em>Chance.</em></span>
-    </h1>
-    <div class="hero-actions">
-      <a href="donate.html" class="btn btn-primary">Support Our Mission</a>
-      <a href="#story" class="btn btn-outline">Learn More</a>
-    </div>
+  <button class="hero-arrow hero-arrow-prev" id="heroPrev" aria-label="Previous slide"><svg width="20" height="20"><use href="#icon-arrow" transform="rotate(180 10 10)"/></svg></button>
+  <button class="hero-arrow hero-arrow-next" id="heroNext" aria-label="Next slide"><svg width="20" height="20"><use href="#icon-arrow"/></svg></button>
+
+  <div class="hero-dots" id="heroDots" role="tablist" aria-label="Slide navigation">
+    <button class="dot is-active" data-goto="0" role="tab" aria-selected="true" aria-label="Go to slide 1"></button>
+    <button class="dot" data-goto="1" role="tab" aria-selected="false" aria-label="Go to slide 2"></button>
+    <button class="dot" data-goto="2" role="tab" aria-selected="false" aria-label="Go to slide 3"></button>
   </div>
 
-  <button class="sound-toggle" id="soundToggle" aria-label="Turn video sound on" aria-pressed="false">
-    <svg width="18" height="18" class="icon-muted"><use href="#icon-mute"/></svg>
-    <svg width="18" height="18" class="icon-unmuted"><use href="#icon-unmute"/></svg>
-    <span class="sound-toggle-label">Sound</span>
-  </button>
-
-  <a href="#story" class="scroll-indicator" aria-label="Scroll to Our Story section">
+  <a href="#about" class="scroll-indicator" aria-label="Scroll to About section">
     <span class="scroll-mouse"><span class="scroll-dot"></span></span>
     <span class="scroll-label">Scroll</span>
   </a>
 </section>
 
 <!-- ============================================
-     2. THE HUMAN SIDE OF SICKLE CELL
+     ABOUT
 ============================================ -->
-<section class="text-emotion human-side reveal" aria-label="The human side of sickle cell">
-  <div class="container">
-    <p class="eyebrow">Beyond The Diagnosis</p>
-    <h2>Behind Every Diagnosis Is a Person.</h2>
-    <p>There is a child trying to live a normal childhood. A parent watching over their child through another crisis. A young person carrying dreams despite the pain.</p>
-    <p>Sickle cell affects more than the body. It can affect education, relationships, finances, mental wellbeing and everyday life.</p>
-    <p class="closing-line">And that is why we exist.</p>
-  </div>
-</section>
-
-<!-- ============================================
-     3. OUR STORY
-============================================ -->
-<section class="about" id="story">
+<section class="about" id="about">
   <div class="bloom bloom-float" style="width:220px;height:220px;top:-60px;left:-70px;color:var(--purple-tint);opacity:0.9;"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
+  <div class="bloom bloom-float-slow" style="width:160px;height:160px;bottom:10%;right:4%;color:rgba(255,111,13,0.1);"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
 
   <div class="container about-grid">
     <div class="about-media reveal-scale">
       <div class="about-media-frame">
-        <img src="images/malichis4.jpg" alt="A Malichis Sickle Cell Foundation warrior supported by the community" loading="lazy" width="600" height="720" data-parallax-speed="0.1">
+        <img src="images/malichis4.jpg" alt="A Malichis Sickle Cell Foundation warrior supported by the community" loading="lazy" width="600" height="720" data-parallax-speed="0.12">
       </div>
       <div class="about-media-badge">
         <svg width="26" height="26"><use href="#icon-heart"/></svg>
         <div><strong>4+ Years</strong><span>Of Trusted Impact</span></div>
       </div>
+      <div class="bloom" style="width:120px;height:120px;bottom:-30px;left:-30px;color:var(--purple);opacity:0.12;z-index:-1;"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
     </div>
 
     <div class="about-copy reveal">
-      <p class="eyebrow">Why Malichis Exists</p>
-      <h2>Our Story</h2>
-      <p class="lead-text">[Founder's name] saw someone they loved fight sickle cell disease without the medication, the emergency care, or even the basic information that could have made the fight survivable.</p>
-      <p>That's the problem we saw — and it's why Malichis Sickle Cell Foundation started in [year]: not as an organization first, but as a decision that no other family in Lagos should face that same struggle alone.</p>
-      <p>Since then, we've grown from a small group showing up at hospitals with medication in hand, to a foundation running awareness campaigns, education programs, and direct support for warriors across our community.</p>
-      <p class="closing-line" style="color:var(--purple);">What began with a desire to help has grown into a mission to educate, support, advocate and create hope.</p>
+      <p class="eyebrow">Who We Are</p>
+      <h2>We Are More Than a Foundation</h2>
+      <p class="lead-text">We are guardians of dignity for the sickle cell community and champions of resilience.</p>
+      <p>For almost half a decade, we have gone beyond charity to deliver medical support, raise life-saving awareness, and advocate for equitable access to quality sickle cell care.</p>
+      <p>We believe every sickle cell warrior deserves not only good health but also the opportunity to thrive. That's why we empower warriors with modern digital skills creating pathways to independence, economic opportunity, and lasting impact.</p>
+      <p>Guided by the 2030 Agenda, we are committed to reducing inequalities, promoting well-being, and ensuring that no sickle cell warrior is left behind.</p>
+      <p>We are more than a foundation, we are a movement transforming the sickle cell narrative.</p>
+      <a href="#what-we-do" class="text-link">Discover what we do <svg width="16" height="16"><use href="#icon-arrow"/></svg></a>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     4. EDUCATION VIDEO
+     MISSION
 ============================================ -->
-<section class="video-feature edu-video" aria-label="Education">
-  <div class="container video-feature-grid">
-    <div class="video-feature-copy reveal">
-      <p class="eyebrow">Education</p>
-      <h2>Knowledge Can Save Lives.</h2>
-      <p>Understanding sickle cell can change how people respond to it.</p>
-      <p>Through education and awareness, we help individuals, families, schools and communities understand sickle cell, challenge misconceptions and make informed decisions.</p>
-      <span class="mini-cta"><svg width="16" height="16"><use href="#icon-check"/></svg> Learn. Understand. Share.</span>
+<section class="mission" id="mission">
+  <div class="container mission-grid">
+    <div class="mission-copy reveal">
+      <p class="eyebrow">Our Mission</p>
+      <h2>Holistic Support, Built Around Every Warrior</h2>
+      <p class="lead-text">To provide holistic support for sickle cell warriors through advocacy, medical assistance, education, and empowerment while building stronger communities that understand and support people living with sickle cell disorder.</p>
+      <div class="mission-tags">
+        <span><svg width="16" height="16"><use href="#icon-check"/></svg> Advocacy</span>
+        <span><svg width="16" height="16"><use href="#icon-check"/></svg> Medical Aid</span>
+        <span><svg width="16" height="16"><use href="#icon-check"/></svg> Education</span>
+        <span><svg width="16" height="16"><use href="#icon-check"/></svg> Empowerment</span>
+      </div>
     </div>
-    <div class="video-feature-media reveal-scale">
-      <video class="feature-video" muted loop playsinline webkit-playsinline preload="metadata" poster="images/malichis1.jpeg" aria-label="Watch our education video">
-        <source src="images/education.mp4" type="video/mp4">
-      </video>
+
+    <div class="mission-art reveal-scale" aria-hidden="false">
+      <div class="mission-gallery">
+        <div class="mg-item"><img src="images/image1.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="mg-item"><img src="images/image2.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="mg-item"><img src="images/image3.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="mg-item"><img src="images/image4.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="mg-item"><img src="images/image5.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+        <div class="mg-item"><img src="images/image6.jpeg" alt="Malichis Sickle Cell Foundation community moment" loading="lazy"></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     5. WHAT WE DO
+     WHAT WE DO
 ============================================ -->
 <section class="wwd" id="what-we-do">
   <div class="bloom bloom-float-slow" style="width:200px;height:200px;top:-40px;right:-60px;color:rgba(104,0,130,0.06);"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
@@ -199,247 +234,248 @@
   <div class="container">
     <div class="wwd-head reveal">
       <p class="eyebrow">What We Do</p>
-      <h2>Turning Compassion Into Action.</h2>
+      <h2>Three Ways We Show Up For Warriors</h2>
     </div>
 
-    <div class="wwd-grid wwd-grid-4 stagger">
+    <div class="wwd-grid stagger">
       <div class="wwd-card reveal" style="--i:0">
+        <span class="card-num">01</span>
         <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-eye"/></svg></div>
-        <h3>Educate</h3>
-        <p>We provide accurate information and raise awareness about sickle cell.</p>
+        <h3>Awareness &amp; Advocacy</h3>
+        <p>Educating communities and reducing stigma through awareness.</p>
       </div>
       <div class="wwd-card reveal" style="--i:1">
-        <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-hand"/></svg></div>
-        <h3>Support</h3>
-        <p>We stand with individuals and families navigating the realities of sickle cell.</p>
+        <span class="card-num">02</span>
+        <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-pulse"/></svg></div>
+        <h3>Medical Support</h3>
+        <p>Providing medications, counselling, and emergency support.</p>
       </div>
       <div class="wwd-card reveal" style="--i:2">
-        <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-mic"/></svg></div>
-        <h3>Advocate</h3>
-        <p>We speak up for better understanding, inclusion and support for people living with sickle cell.</p>
-      </div>
-      <div class="wwd-card reveal" style="--i:3">
-        <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-sparkle"/></svg></div>
-        <h3>Empower</h3>
-        <p>We help people affected by sickle cell access knowledge, resources and a supportive community.</p>
+        <span class="card-num">03</span>
+        <div class="wwd-icon"><svg width="30" height="30"><use href="#icon-laptop"/></svg></div>
+        <h3>Digital Skills Empowerment</h3>
+        <p>Helping warriors build sustainable careers through modern digital skills.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     6. A MESSAGE OF HOPE
-============================================ -->
-<section class="text-emotion hope-message reveal" aria-label="A message of hope">
-  <div class="container">
-    <p class="eyebrow">A Message Of Hope</p>
-    <h2>They Are More Than Their Condition.</h2>
-    <p>A sickle cell diagnosis does not define someone's dreams, abilities or future.</p>
-    <p>With understanding, support and access to the right resources, people living with sickle cell can pursue their dreams and live meaningful lives.</p>
-    <p class="closing-line">We believe in that future.</p>
-  </div>
-</section>
-
-<!-- ============================================
-     7. VISIT US / COMMUNITY
-============================================ -->
-<section class="video-feature visit-video" aria-label="Visit our community">
-  <div class="container video-feature-grid is-reversed">
-    <div class="video-feature-copy reveal">
-      <p class="eyebrow">Community</p>
-      <h2>Come. Connect. Be Part of the Community.</h2>
-      <p>Sometimes, knowing that someone understands can make all the difference.</p>
-      <p>Our work is rooted in community. We create spaces where people can connect, learn, share their experiences and find support.</p>
-      <a href="contact.html" class="btn btn-ghost-purple" style="margin-top:14px;">Visit Us</a>
-    </div>
-    <div class="video-feature-media reveal-scale">
-      <video class="feature-video" muted loop playsinline webkit-playsinline preload="metadata" poster="images/malichis3.jpeg" aria-label="Take a look inside our community">
-        <source src="images/visit.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     8. OUR IMPACT
+     IMPACT
 ============================================ -->
 <section class="impact" id="impact">
   <div class="container">
     <div class="impact-head reveal">
       <p class="eyebrow">Our Impact</p>
-      <h2>Together, We Are Making a Difference.</h2>
+      <h2>Numbers That Tell A Story Of Hope</h2>
     </div>
 
     <div class="impact-grid stagger">
       <div class="impact-card reveal" style="--i:0">
-        <div class="impact-num"><span class="counter" data-target="1000" data-suffix="+">0</span></div>
-        <p>People Reached</p>
+        <div class="impact-num"><span class="counter" data-target="4" data-suffix="+">0</span></div>
+        <p>Years of Impact</p>
       </div>
       <div class="impact-card reveal" style="--i:1">
-        <div class="impact-num"><span class="counter" data-target="50" data-suffix="+">0</span></div>
-        <p>Awareness Activities</p>
+        <div class="impact-num"><span class="counter" data-target="300" data-suffix="+">0</span></div>
+        <p>Warriors Supported</p>
       </div>
       <div class="impact-card reveal" style="--i:2">
-        <div class="impact-num"><span class="counter" data-target="20" data-suffix="+">0</span></div>
-        <p>Communities Engaged</p>
+        <div class="impact-num"><span class="static-num">Annual</span></div>
+        <p>Awareness Campaigns</p>
       </div>
       <div class="impact-card reveal" style="--i:3">
-        <div class="impact-num"><span class="counter" data-target="100" data-suffix="+">0</span></div>
-        <p>People Supported</p>
+        <div class="impact-num"><span class="static-num">Growing</span></div>
+        <p>Community</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     9. HELP VIDEO
+     2026 VISION TIMELINE
 ============================================ -->
-<section class="video-feature help-video" aria-label="How you can help">
-  <div class="container video-feature-grid">
-    <div class="video-feature-copy reveal">
-      <p class="eyebrow">You Can Help</p>
-      <h2>Sometimes, A Little Help Means Everything.</h2>
-      <p>For someone living with sickle cell, support can mean more than we realise.</p>
-      <p>Your contribution can help us reach more people, provide support, spread awareness and remind individuals and families that they are not alone.</p>
-      <a href="donate.html" class="btn btn-primary" style="margin-top:14px;">Help Us Make a Difference</a>
+<section class="vision" id="vision">
+  <div class="container">
+    <div class="vision-head reveal">
+      <p class="eyebrow">2026 Vision</p>
+      <h2>Where We're Headed Next</h2>
     </div>
-    <div class="video-feature-media reveal-scale">
-      <video class="feature-video" muted loop playsinline webkit-playsinline preload="metadata" poster="images/malichis.jpeg" aria-label="See how you can help">
-        <source src="images/help.mp4" type="video/mp4">
-      </video>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-icon"><svg width="26" height="26"><use href="#icon-film"/></svg></div>
+        <div class="timeline-body">
+          <span class="tl-year">Storytelling</span>
+          <h3>Warrior Chronicles Documentary</h3>
+          <p>A documentary series capturing the real, lived experiences of sickle cell warriors across Nigeria.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-icon"><svg width="26" height="26"><use href="#icon-mic"/></svg></div>
+        <div class="timeline-body">
+          <span class="tl-year">Outreach</span>
+          <h3>Radio Media Tour</h3>
+          <p>Bringing awareness and education directly into communities through a nationwide radio tour.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-icon"><svg width="26" height="26"><use href="#icon-walk"/></svg></div>
+        <div class="timeline-body">
+          <span class="tl-year">Community</span>
+          <h3>Annual Awareness Walk</h3>
+          <p>Uniting supporters, warriors, and partners in a citywide walk for visibility and solidarity.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-icon"><svg width="26" height="26"><use href="#icon-sparkle"/></svg></div>
+        <div class="timeline-body">
+          <span class="tl-year">Growth</span>
+          <h3>Institutional Rebranding</h3>
+          <p>Strengthening our identity and systems to serve warriors with even greater impact.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     10. DONATE
+     DONATION
 ============================================ -->
 <section class="donate" id="donate">
   <div class="bloom bloom-float" style="width:240px;height:240px;top:-50px;left:-80px;color:rgba(104,0,130,0.05);"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
+  <div class="bloom bloom-float-slow" style="width:180px;height:180px;bottom:-30px;right:-40px;color:rgba(255,111,13,0.08);"><svg viewBox="0 0 200 200"><use href="#bloom-shape" fill="currentColor"/></svg></div>
 
   <div class="container">
     <div class="donate-layout">
       <div class="donate-copy reveal">
         <p class="eyebrow">Give Today</p>
-        <h2>Your Support Can Become Someone's Hope.</h2>
-        <p>You don't have to solve everything to make a difference. Every contribution helps us continue our work and reach people who need education, support and hope.</p>
+        <h2>Every Donation Gives Hope</h2>
+        <p>Your generosity helps provide medication, emergency care, awareness campaigns, education, and digital skills training for sickle cell warriors.</p>
         <div class="donate-actions">
-          <a href="donate.html" class="btn btn-primary">Donate Today</a>
+          <a href="donate.html" class="btn btn-primary">Donate Now</a>
           <a href="contact.html" class="btn btn-ghost-purple">Become a Partner</a>
         </div>
       </div>
 
-      <div class="donate-visual reveal-scale">
-        <img src="images/donate.jpg" alt="Support Malichis Sickle Cell Foundation" loading="lazy">
+      <div class="donate-payment reveal-scale">
+        <p class="payment-label"><svg width="20" height="20"><use href="#icon-shield"/></svg> Payment Secured</p>
+        <div class="payment-images">
+          <img src="images/pay1.jpeg" alt="Secure payment method" loading="lazy">
+          <img src="images/pay2.jpeg" alt="Secure payment method" loading="lazy">
+          <img src="images/pay3.jpeg" alt="Secure payment method" loading="lazy">
+        </div>
       </div>
+    </div>
+
+    <div class="trust-badges reveal">
+      <div class="trust-badge"><svg width="20" height="20"><use href="#icon-shield"/></svg> Secure &amp; Transparent</div>
+      <div class="trust-badge"><svg width="20" height="20"><use href="#icon-heart"/></svg> 100% Goes To Warriors</div>
+      <div class="trust-badge"><svg width="20" height="20"><use href="#icon-award"/></svg> Trusted Since 2022</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     11. OUR VALUES
+     WHY SUPPORT US
 ============================================ -->
-<section class="why" id="values">
+<section class="why" id="why-support">
   <div class="container">
     <div class="why-head reveal">
-      <p class="eyebrow">What We Believe In</p>
-      <h2>Our Values</h2>
+      <p class="eyebrow">Why Support Us</p>
+      <h2>Built On Trust, Driven By Purpose</h2>
     </div>
 
-    <div class="values-grid stagger">
+    <div class="why-grid stagger">
       <div class="why-card reveal" style="--i:0">
-        <div class="why-icon"><svg width="26" height="26"><use href="#icon-heart"/></svg></div>
-        <h3>Compassion</h3>
-        <p>We lead with empathy and understanding.</p>
+        <div class="why-icon"><svg width="26" height="26"><use href="#icon-eye"/></svg></div>
+        <h3>Transparency</h3>
+        <p>Clear reporting on how every donation is used.</p>
       </div>
       <div class="why-card reveal" style="--i:1">
-        <div class="why-icon"><svg width="26" height="26"><use href="#icon-users"/></svg></div>
-        <h3>Community</h3>
-        <p>No one should have to face sickle cell alone.</p>
+        <div class="why-icon"><svg width="26" height="26"><use href="#icon-heart"/></svg></div>
+        <h3>Compassion</h3>
+        <p>Warriors are met with dignity, not pity.</p>
       </div>
       <div class="why-card reveal" style="--i:2">
-        <div class="why-icon"><svg width="26" height="26"><use href="#icon-laptop"/></svg></div>
-        <h3>Education</h3>
-        <p>Knowledge creates understanding and empowers better decisions.</p>
+        <div class="why-icon"><svg width="26" height="26"><use href="#icon-users"/></svg></div>
+        <h3>Community</h3>
+        <p>A growing network of supporters and advocates.</p>
       </div>
       <div class="why-card reveal" style="--i:3">
-        <div class="why-icon"><svg width="26" height="26"><use href="#icon-mic"/></svg></div>
-        <h3>Advocacy</h3>
-        <p>We speak up for people affected by sickle cell.</p>
-      </div>
-      <div class="why-card reveal" style="--i:4">
-        <div class="why-icon"><svg width="26" height="26"><use href="#icon-sparkle"/></svg></div>
-        <h3>Hope</h3>
-        <p>We believe every person deserves the opportunity to live, dream and thrive.</p>
+        <div class="why-icon"><svg width="26" height="26"><use href="#icon-bar"/></svg></div>
+        <h3>Impact</h3>
+        <p>Measurable change in the lives we touch.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     12. OUR TEAM
-============================================ -->
-<section class="team" id="team">
-  <div class="team-head reveal">
-    <p class="eyebrow">Meet The People</p>
-    <h2>The People Behind the Mission</h2>
-  </div>
-
-  <div class="container">
-    <div class="team-grid stagger">
-      <div class="team-card reveal" style="--i:0">
-        <div class="team-photo">[Photo]</div>
-        <h3>[Name]</h3>
-        <span class="team-role">[Position]</span>
-        <p class="bio">[Short 1–2 sentence biography.]</p>
-      </div>
-      <div class="team-card reveal" style="--i:1">
-        <div class="team-photo">[Photo]</div>
-        <h3>[Name]</h3>
-        <span class="team-role">[Position]</span>
-        <p class="bio">[Short 1–2 sentence biography.]</p>
-      </div>
-      <div class="team-card reveal" style="--i:2">
-        <div class="team-photo">[Photo]</div>
-        <h3>[Name]</h3>
-        <span class="team-role">[Position]</span>
-        <p class="bio">[Short 1–2 sentence biography.]</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     13. PARTNERS & SUPPORTERS
-============================================ -->
-<section class="partners" id="partners">
-  <div class="partners-head reveal">
-    <p class="eyebrow">We Can't Do This Alone</p>
-    <h2>Partners &amp; Supporters</h2>
-    <p>Creating lasting change requires collaboration. We are grateful to the individuals, organisations, healthcare professionals, volunteers and partners who support our mission.</p>
-  </div>
-  <div class="container">
-    <div class="partners-row reveal">
-      <div class="partner-logo">[Partner logo]</div>
-      <div class="partner-logo">[Partner logo]</div>
-      <div class="partner-logo">[Partner logo]</div>
-      <div class="partner-logo">[Partner logo]</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     14. FINAL EMOTIONAL CTA
+     CTA
 ============================================ -->
 <section class="cta">
   <div class="container cta-inner reveal">
-    <h2>You Can Be Part of Someone's Story.</h2>
-    <p>Maybe it's through a donation. Maybe it's through volunteering. Maybe it's through sharing what you know. Maybe it's simply choosing to understand. Whatever you do, your action can help create a world where people living with sickle cell are seen, supported and empowered.</p>
-    <p style="color:var(--white);font-weight:700;font-size:1.15rem;margin-bottom:30px;">Join Us. Create Hope. Change Lives.</p>
+    <h2>Together We Can Make Every Warrior Stronger</h2>
+    <p>Join a community of donors, volunteers, and partners committed to a future where every sickle cell warrior thrives.</p>
     <div class="cta-actions">
-      <a href="donate.html" class="btn btn-primary">Donate</a>
-      <a href="contact.html" class="btn btn-outline">Volunteer</a>
-      <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+      <a href="donate.html" class="btn btn-primary">Donate Today</a>
+      <a href="contact.html" class="btn btn-outline">Volunteer With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+============================================ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-card reveal">
+      <div class="contact-copy">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>We'd Love To Hear From You</h2>
+        <p>Reach out to volunteer, partner, or ask any questions about supporting our warriors.</p>
+
+        <ul class="contact-list">
+          <li>
+            <span class="c-icon"><svg width="20" height="20"><use href="#icon-phone"/></svg></span>
+            <div>
+              <strong>Call Us</strong>
+              <a href="tel:+2348064610905">+234 806 461 0905</a><br>
+              <a href="tel:+2348109260025">+234 810 926 0025</a>
+            </div>
+          </li>
+          <li>
+            <span class="c-icon"><svg width="20" height="20"><use href="#icon-mail"/></svg></span>
+            <div>
+              <strong>Email Us</strong>
+              <a href="mailto:malichisfoundation@gmail.com">malichisfoundation@gmail.com</a>
+            </div>
+          </li>
+          <li>
+            <span class="c-icon"><svg width="20" height="20"><use href="#icon-insta"/></svg></span>
+            <div>
+              <strong>Follow Us</strong>
+              <a href="https://instagram.com/malichis_sicklecell_foundation" target="_blank" rel="noopener">@malichis_sicklecell_foundation</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-form-panel">
+        <form class="contact-form" id="contactForm">
+          <label for="cfName" class="sr-only">Full name</label>
+          <input type="text" id="cfName" name="name" placeholder="Your full name" required>
+
+          <label for="cfEmail" class="sr-only">Email address</label>
+          <input type="email" id="cfEmail" name="email" placeholder="Your email address" required>
+
+          <label for="cfMessage" class="sr-only">Message</label>
+          <textarea id="cfMessage" name="message" placeholder="How would you like to get involved?" required></textarea>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+        </form>
+        <p class="contact-form-note" id="contactFormNote">We'll get back to you within 1–2 business days.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -453,7 +489,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="index.html#home" class="footer-brand" aria-label="Malichis Sickle Cell Foundation — Home">
+        <a href="#home" class="footer-brand" aria-label="Malichis Sickle Cell Foundation — Home">
           <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo" width="96" height="96">
         </a>
         <p class="foot-desc">Supporting sickle cell warriors in Lagos, Nigeria through awareness, medical assistance, and digital empowerment.</p>
@@ -463,9 +499,9 @@
         <h4>Quick Links</h4>
         <div class="footer-links">
           <a href="about.html">About</a>
-          <a href="index.html#what-we-do">What We Do</a>
-          <a href="index.html#impact">Impact</a>
-          <a href="index.html#vision">Vision</a>
+          <a href="#what-we-do">What We Do</a>
+          <a href="#impact">Impact</a>
+          <a href="#vision">Vision</a>
           <a href="donate.html">Donate</a>
         </div>
       </div>
