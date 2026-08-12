@@ -23,18 +23,43 @@
   var navToggle = document.getElementById('navToggle');
   var navMenu = document.getElementById('navMenu');
   var navScrim = document.getElementById('navScrim');
+  var menuScrollY = 0;
+
+  /* iOS Safari needs the background locked with position:fixed (not just
+     overflow:hidden) or it keeps rubber-band-scrolling behind a fixed
+     overlay — which is what was breaking the menu: every scroll behind it
+     caused the panel to flicker, and taps got read as scroll gestures
+     instead of clicks, so links never actually navigated. */
+  function lockBodyScroll() {
+    menuScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + menuScrollY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+  function unlockBodyScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, menuScrollY);
+  }
 
   function closeMenu() {
     navToggle.classList.remove('active');
     navMenu.classList.remove('open');
     navScrim.classList.remove('active');
     navToggle.setAttribute('aria-expanded', 'false');
+    unlockBodyScroll();
   }
   function toggleMenu() {
     var isOpen = navMenu.classList.toggle('open');
     navToggle.classList.toggle('active', isOpen);
     navScrim.classList.toggle('active', isOpen);
     navToggle.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) { lockBodyScroll(); } else { unlockBodyScroll(); }
   }
   navToggle.addEventListener('click', toggleMenu);
   navScrim.addEventListener('click', closeMenu);
