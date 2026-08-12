@@ -805,6 +805,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 .contact-form-panel { display: flex; flex-direction: column; justify-content: center; }
 .contact-form { display: flex; flex-direction: column; gap: 18px; }
 .contact-form input,
+.contact-form select,
 .contact-form textarea {
   width: 100%;
   padding: 15px 20px;
@@ -816,10 +817,13 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   resize: vertical;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
+.contact-form select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a637f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; background-size: 16px; padding-right: 46px; }
+.contact-form select:invalid { color: var(--ink-faint); }
 .contact-form textarea { min-height: 130px; }
 .contact-form input::placeholder,
 .contact-form textarea::placeholder { color: var(--ink-faint); }
 .contact-form input:focus,
+.contact-form select:focus,
 .contact-form textarea:focus {
   outline: none;
   border-color: var(--purple);
@@ -1054,4 +1058,30 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
 @media (max-width: 480px) {
   .donate-gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .donate-gallery .mg-item:nth-child(even) { margin-top: 14px; }
+}
+
+/* ============================================
+   DONATE PAGE — CATEGORY TABS
+============================================ */
+.donate-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 28px; }
+.donate-tab {
+  padding: 11px 20px;
+  border-radius: 100px;
+  background: var(--purple-tint);
+  color: var(--purple);
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.donate-tab:hover { transform: translateY(-2px); }
+.donate-tab.is-active { background: var(--purple); color: var(--white); box-shadow: var(--shadow-soft); }
+
+.donate-panel { display: none; }
+.donate-panel.is-active { display: block; animation: fadeUp 0.5s var(--ease); }
+.donate-panel-note { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 18px; }
+
+@media (max-width: 520px) {
+  .donate-tabs { gap: 8px; }
+  .donate-tab { padding: 9px 16px; font-size: 0.8rem; }
 }
