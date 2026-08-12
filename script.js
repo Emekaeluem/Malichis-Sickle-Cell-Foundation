@@ -240,18 +240,44 @@
     });
   }
 
-  /* ---------- Donate Form (front-end only demo) ---------- */
-  var donateForm = document.getElementById('donateForm');
+  /* ---------- Donate Tabs (Donate page) ---------- */
+  var donateTabs = Array.prototype.slice.call(document.querySelectorAll('.donate-tab'));
+  var donatePanels = Array.prototype.slice.call(document.querySelectorAll('.donate-panel'));
   var donateFormNote = document.getElementById('donateFormNote');
-  if (donateForm) {
-    donateForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var amount = document.getElementById('donorAmount').value;
-      donateFormNote.textContent = amount
-        ? 'Thank you! Redirecting you to complete your \u20a6' + amount + ' donation securely.'
-        : 'Thank you! Redirecting you to complete your donation securely.';
-      donateForm.reset();
+  if (donateTabs.length && donatePanels.length) {
+    donateTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-tab');
+        donateTabs.forEach(function (t) {
+          t.classList.toggle('is-active', t === tab);
+          t.setAttribute('aria-selected', String(t === tab));
+        });
+        donatePanels.forEach(function (p) {
+          p.classList.toggle('is-active', p.getAttribute('data-panel') === target);
+        });
+        if (donateFormNote) { donateFormNote.textContent = 'Choose a category above to get started.'; }
+      });
     });
   }
+
+  /* ---------- Donate Forms (front-end only demo) ---------- */
+  var donateForms = Array.prototype.slice.call(document.querySelectorAll('.donate-form'));
+  donateForms.forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (donateFormNote) {
+        var successMsg = form.getAttribute('data-success');
+        if (successMsg === 'AMOUNT_MESSAGE') {
+          var amountField = form.querySelector('[name="amount"]');
+          var amount = amountField ? amountField.value : '';
+          successMsg = amount
+            ? 'Thank you! Redirecting you to complete your \u20a6' + amount + ' donation securely.'
+            : 'Thank you! Redirecting you to complete your donation securely.';
+        }
+        donateFormNote.textContent = successMsg;
+      }
+      form.reset();
+    });
+  });
 
 })();
