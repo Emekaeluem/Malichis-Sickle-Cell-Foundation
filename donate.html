@@ -99,23 +99,188 @@
   <div class="container">
     <div class="donate-layout">
       <div class="donate-copy reveal">
-        <p class="eyebrow">Choose Your Amount</p>
-        <h2>Your Support Can Become Someone's Hope.</h2>
-        <p>Enter the amount you'd like to give. Every contribution helps us continue our work and reach people who need education, support and hope.</p>
+        <p class="eyebrow">Ways To Give</p>
+        <h2>Choose How You'd Like to Help.</h2>
+        <p>Every kind of support matters. Pick a category below and fill in the details — we'll take it from there.</p>
 
-        <form class="contact-form" id="donateForm" style="margin-top:28px;max-width:420px;">
-          <label for="donorName" class="sr-only">Full name</label>
-          <input type="text" id="donorName" name="name" placeholder="Your full name" required>
+        <div class="donate-tabs" role="tablist" aria-label="Ways to give">
+          <button class="donate-tab is-active" data-tab="skill" role="tab" aria-selected="true">Skill</button>
+          <button class="donate-tab" data-tab="money" role="tab" aria-selected="false">Money</button>
+          <button class="donate-tab" data-tab="food" role="tab" aria-selected="false">Food Stuffs</button>
+          <button class="donate-tab" data-tab="education" role="tab" aria-selected="false">Education Sponsorship</button>
+          <button class="donate-tab" data-tab="medication" role="tab" aria-selected="false">Medication &amp; Treatment</button>
+        </div>
 
-          <label for="donorEmail" class="sr-only">Email address</label>
-          <input type="email" id="donorEmail" name="email" placeholder="Your email address" required>
+        <!-- SKILL -->
+        <div class="donate-panel is-active" data-panel="skill">
+          <p class="donate-panel-note">Volunteer your time and expertise — medical, creative, administrative, or otherwise.</p>
+          <form class="contact-form donate-form" data-success="Thank you! We'll reach out to coordinate how your skill can help.">
+            <label for="skillName" class="sr-only">Full name</label>
+            <input type="text" id="skillName" name="name" placeholder="Your full name" required>
 
-          <label for="donorAmount" class="sr-only">Amount (₦)</label>
-          <input type="number" id="donorAmount" name="amount" placeholder="Amount (₦)" min="1" step="1" required>
+            <label for="skillEmail" class="sr-only">Email address</label>
+            <input type="email" id="skillEmail" name="email" placeholder="Your email address" required>
 
-          <button type="submit" class="btn btn-primary" style="width:100%;">Donate Now</button>
-        </form>
-        <p class="contact-form-note" id="donateFormNote">You'll be redirected to complete payment securely.</p>
+            <label for="skillPhone" class="sr-only">Phone number</label>
+            <input type="tel" id="skillPhone" name="phone" placeholder="Your phone number" required>
+
+            <label for="skillType" class="sr-only">Area of skill</label>
+            <select id="skillType" name="skillType" required>
+              <option value="" disabled selected>Area of skill</option>
+              <option>Medical &amp; Nursing</option>
+              <option>Teaching &amp; Tutoring</option>
+              <option>Counseling &amp; Mental Health</option>
+              <option>IT &amp; Digital Skills</option>
+              <option>Graphic Design &amp; Media</option>
+              <option>Event Planning</option>
+              <option>Legal Support</option>
+              <option>Other</option>
+            </select>
+
+            <label for="skillAvailability" class="sr-only">Availability</label>
+            <input type="text" id="skillAvailability" name="availability" placeholder="Your availability (e.g. weekends, 2 hrs/week)" required>
+
+            <label for="skillMessage" class="sr-only">How you'd like to help</label>
+            <textarea id="skillMessage" name="message" placeholder="Tell us how you'd like to help"></textarea>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Offer Your Skill</button>
+          </form>
+        </div>
+
+        <!-- MONEY -->
+        <div class="donate-panel" data-panel="money">
+          <p class="donate-panel-note">Enter the amount you'd like to give. Every contribution helps us continue our work.</p>
+          <form class="contact-form donate-form" data-success="AMOUNT_MESSAGE">
+            <label for="moneyName" class="sr-only">Full name</label>
+            <input type="text" id="moneyName" name="name" placeholder="Your full name" required>
+
+            <label for="moneyEmail" class="sr-only">Email address</label>
+            <input type="email" id="moneyEmail" name="email" placeholder="Your email address" required>
+
+            <label for="moneyAmount" class="sr-only">Amount (₦)</label>
+            <input type="number" id="moneyAmount" name="amount" placeholder="Amount (₦)" min="1" step="1" required>
+
+            <label for="moneyFrequency" class="sr-only">Donation frequency</label>
+            <select id="moneyFrequency" name="frequency" required>
+              <option value="" disabled selected>Donation frequency</option>
+              <option>One-time</option>
+              <option>Monthly</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Donate Now</button>
+          </form>
+        </div>
+
+        <!-- FOOD STUFFS -->
+        <div class="donate-panel" data-panel="food">
+          <p class="donate-panel-note">Donate food items directly to support warriors and families facing food insecurity.</p>
+          <form class="contact-form donate-form" data-success="Thank you! We'll follow up to arrange your food donation.">
+            <label for="foodName" class="sr-only">Full name</label>
+            <input type="text" id="foodName" name="name" placeholder="Your full name" required>
+
+            <label for="foodEmail" class="sr-only">Email address</label>
+            <input type="email" id="foodEmail" name="email" placeholder="Your email address" required>
+
+            <label for="foodPhone" class="sr-only">Phone number</label>
+            <input type="tel" id="foodPhone" name="phone" placeholder="Your phone number" required>
+
+            <label for="foodItems" class="sr-only">Food items</label>
+            <textarea id="foodItems" name="items" placeholder="Food items you'd like to donate (e.g. rice, beans, garri, milk)" required></textarea>
+
+            <label for="foodQuantity" class="sr-only">Estimated quantity or value</label>
+            <input type="text" id="foodQuantity" name="quantity" placeholder="Estimated quantity or value" required>
+
+            <label for="foodDelivery" class="sr-only">Delivery method</label>
+            <select id="foodDelivery" name="delivery" required>
+              <option value="" disabled selected>Preferred delivery method</option>
+              <option>I'll drop it off</option>
+              <option>Please arrange pickup</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Donate Food Items</button>
+          </form>
+        </div>
+
+        <!-- EDUCATION SPONSORSHIP -->
+        <div class="donate-panel" data-panel="education">
+          <p class="donate-panel-note">Sponsor a warrior's education — school fees, supplies, or full tuition support.</p>
+          <form class="contact-form donate-form" data-success="Thank you! We'll reach out with next steps for your sponsorship.">
+            <label for="eduName" class="sr-only">Full name</label>
+            <input type="text" id="eduName" name="name" placeholder="Your full name" required>
+
+            <label for="eduEmail" class="sr-only">Email address</label>
+            <input type="email" id="eduEmail" name="email" placeholder="Your email address" required>
+
+            <label for="eduPhone" class="sr-only">Phone number</label>
+            <input type="tel" id="eduPhone" name="phone" placeholder="Your phone number" required>
+
+            <label for="eduType" class="sr-only">Sponsorship type</label>
+            <select id="eduType" name="sponsorshipType" required>
+              <option value="" disabled selected>Sponsorship type</option>
+              <option>Full sponsorship</option>
+              <option>Partial sponsorship</option>
+              <option>School supplies only</option>
+            </select>
+
+            <label for="eduLevel" class="sr-only">Education level</label>
+            <select id="eduLevel" name="level" required>
+              <option value="" disabled selected>Education level</option>
+              <option>Primary</option>
+              <option>Secondary</option>
+              <option>Tertiary</option>
+              <option>Vocational</option>
+            </select>
+
+            <label for="eduAmount" class="sr-only">Commitment amount (₦)</label>
+            <input type="number" id="eduAmount" name="amount" placeholder="Commitment amount (₦)" min="1" step="1" required>
+
+            <label for="eduDuration" class="sr-only">Commitment duration</label>
+            <select id="eduDuration" name="duration" required>
+              <option value="" disabled selected>Commitment duration</option>
+              <option>6 months</option>
+              <option>1 year</option>
+              <option>Ongoing</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Sponsor Education</button>
+          </form>
+        </div>
+
+        <!-- MEDICATION & TREATMENT -->
+        <div class="donate-panel" data-panel="medication">
+          <p class="donate-panel-note">Support a warrior's medication, hospital bills, or ongoing treatment costs.</p>
+          <form class="contact-form donate-form" data-success="Thank you! We'll be in touch to coordinate your contribution.">
+            <label for="medName" class="sr-only">Full name</label>
+            <input type="text" id="medName" name="name" placeholder="Your full name" required>
+
+            <label for="medEmail" class="sr-only">Email address</label>
+            <input type="email" id="medEmail" name="email" placeholder="Your email address" required>
+
+            <label for="medPhone" class="sr-only">Phone number</label>
+            <input type="tel" id="medPhone" name="phone" placeholder="Your phone number" required>
+
+            <label for="medType" class="sr-only">Type of support</label>
+            <select id="medType" name="supportType" required>
+              <option value="" disabled selected>Type of support</option>
+              <option>Specific medication</option>
+              <option>Hospital bill support</option>
+              <option>General medical fund</option>
+            </select>
+
+            <label for="medDetail" class="sr-only">Medication name (if applicable)</label>
+            <input type="text" id="medDetail" name="medicationName" placeholder="Medication name (if applicable)">
+
+            <label for="medAmount" class="sr-only">Estimated value or amount (₦)</label>
+            <input type="number" id="medAmount" name="amount" placeholder="Estimated value or amount (₦)" min="1" step="1" required>
+
+            <label for="medNotes" class="sr-only">Additional notes</label>
+            <textarea id="medNotes" name="notes" placeholder="Additional notes"></textarea>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">Support Medication &amp; Treatment</button>
+          </form>
+        </div>
+
+        <p class="contact-form-note" id="donateFormNote">Choose a category above to get started.</p>
       </div>
 
       <div class="donate-payment reveal-scale">
