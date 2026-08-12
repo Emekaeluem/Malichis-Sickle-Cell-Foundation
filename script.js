@@ -67,61 +67,122 @@
     a.addEventListener('click', closeMenu);
   });
 
-  /* ---------- Hero Video ---------- */
+  /* ---------- Hero Slider / Video ---------- */
   var heroSection = document.querySelector('.hero');
   var heroVideo = document.getElementById('heroVideo');
   var soundToggle = document.getElementById('soundToggle');
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (heroSection && heroVideo && soundToggle) {
-    (function () {
-      function setSoundState(isOn) {
-        soundToggle.classList.toggle('is-unmuted', isOn);
-        soundToggle.setAttribute('aria-pressed', String(isOn));
-        soundToggle.setAttribute('aria-label', isOn ? 'Turn video sound off' : 'Turn video sound on');
-      }
+  function setSoundState(isOn) {
+    if (!soundToggle) return;
+    soundToggle.classList.toggle('is-unmuted', isOn);
+    soundToggle.setAttribute('aria-pressed', String(isOn));
+    soundToggle.setAttribute('aria-label', isOn ? 'Turn video sound off' : 'Turn video sound on');
+  }
 
-      /* Try to start the video WITH sound. Browsers only allow this in limited
-         cases (e.g. the visitor has interacted with this site before) — if the
-         browser blocks it, we fall back to muted playback and let the visitor
-         opt in with one tap. */
-      function tryUnmutedAutoplay() {
-        heroVideo.muted = false;
-        var playPromise = heroVideo.play();
-        if (playPromise && typeof playPromise.then === 'function') {
-          playPromise.then(function () {
-            setSoundState(!heroVideo.muted);
-          }).catch(function () {
-            heroVideo.muted = true;
-            heroVideo.play();
-            setSoundState(false);
-          });
-        } else {
-          setSoundState(!heroVideo.muted);
-        }
-      }
-      tryUnmutedAutoplay();
-
-      soundToggle.addEventListener('click', function () {
-        heroVideo.muted = !heroVideo.muted;
-        if (!heroVideo.muted) { heroVideo.play(); }
+  /* Try to start the video WITH sound. Browsers only allow this in limited
+     cases (e.g. the visitor has interacted with this site before) — if the
+     browser blocks it, we fall back to muted playback and let the visitor
+     opt in with one tap. */
+  function tryUnmutedAutoplay() {
+    if (!heroVideo) return;
+    heroVideo.muted = false;
+    var playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(function () {
         setSoundState(!heroVideo.muted);
+      }).catch(function () {
+        heroVideo.muted = true;
+        heroVideo.play();
+        setSoundState(false);
       });
+    } else {
+      setSoundState(!heroVideo.muted);
+    }
+  }
 
-      /* Mouse parallax on hero text */
-      var heroContentEl = document.querySelector('.hero-content');
-      if (!prefersReduced && heroContentEl) {
-        heroSection.addEventListener('mousemove', function (e) {
-          var rect = heroSection.getBoundingClientRect();
-          var relX = (e.clientX - rect.left) / rect.width - 0.5;
-          var relY = (e.clientY - rect.top) / rect.height - 0.5;
-          heroContentEl.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
-        });
-        heroSection.addEventListener('mouseleave', function () {
-          heroContentEl.style.transform = 'translate(0,0)';
-        });
+  if (soundToggle && heroVideo) {
+    soundToggle.addEventListener('click', function () {
+      heroVideo.muted = !heroVideo.muted;
+      if (!heroVideo.muted) { heroVideo.play(); }
+      setSoundState(!heroVideo.muted);
+    });
+  }
+
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+
+  if (heroSection && slides.length) {
+    /* Multi-slide carousel (homepage) — slide 0 holds the video */
+    var current = 0;
+    var slideTimer = null;
+    var SLIDE_DURATION = 9500;
+
+    function goTo(index) {
+      if (index === current) return;
+      var prevIndex = current;
+      slides[current].classList.remove('is-active');
+      if (dots[current]) { dots[current].classList.remove('is-active'); dots[current].setAttribute('aria-selected', 'false'); }
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('is-active');
+      if (dots[current]) { dots[current].classList.add('is-active'); dots[current].setAttribute('aria-selected', 'true'); }
+
+      if (heroVideo) {
+        if (current === 0) { tryUnmutedAutoplay(); }
+        else if (prevIndex === 0) { heroVideo.pause(); }
       }
-    })();
+    }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+    function startAuto() { stopAuto(); slideTimer = setInterval(next, SLIDE_DURATION); }
+    function stopAuto() { if (slideTimer) clearInterval(slideTimer); }
+
+    var heroNextBtn = document.getElementById('heroNext');
+    var heroPrevBtn = document.getElementById('heroPrev');
+    if (heroNextBtn) heroNextBtn.addEventListener('click', function () { next(); startAuto(); });
+    if (heroPrevBtn) heroPrevBtn.addEventListener('click', function () { prev(); startAuto(); });
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(dot.getAttribute('data-goto'), 10));
+        startAuto();
+      });
+    });
+    heroSection.addEventListener('mouseenter', stopAuto);
+    heroSection.addEventListener('mouseleave', startAuto);
+    startAuto();
+
+    if (heroVideo) { tryUnmutedAutoplay(); }
+
+    if (!prefersReduced) {
+      heroSection.addEventListener('mousemove', function (e) {
+        var rect = heroSection.getBoundingClientRect();
+        var relX = (e.clientX - rect.left) / rect.width - 0.5;
+        var relY = (e.clientY - rect.top) / rect.height - 0.5;
+        var activeContent = document.querySelector('.slide.is-active .hero-content');
+        if (activeContent) {
+          activeContent.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
+        }
+      });
+      heroSection.addEventListener('mouseleave', function () {
+        var activeContent = document.querySelector('.slide.is-active .hero-content');
+        if (activeContent) activeContent.style.transform = 'translate(0,0)';
+      });
+    }
+  } else if (heroSection && heroVideo && soundToggle) {
+    /* Single-video hero, no slides (About page) */
+    tryUnmutedAutoplay();
+    var heroContentEl = document.querySelector('.hero-content');
+    if (!prefersReduced && heroContentEl) {
+      heroSection.addEventListener('mousemove', function (e) {
+        var rect = heroSection.getBoundingClientRect();
+        var relX = (e.clientX - rect.left) / rect.width - 0.5;
+        var relY = (e.clientY - rect.top) / rect.height - 0.5;
+        heroContentEl.style.transform = 'translate(' + (relX * -14) + 'px, ' + (relY * -10) + 'px)';
+      });
+      heroSection.addEventListener('mouseleave', function () {
+        heroContentEl.style.transform = 'translate(0,0)';
+      });
+    }
   }
 
 
