@@ -13,6 +13,11 @@
   };
   document.addEventListener('scroll', onScrollNav, { passive: true });
   onScrollNav();
+  /* Re-check after the browser settles any #anchor jump on page load —
+     the initial check above can race ahead of that jump on some mobile
+     browsers, so this catches it a beat later. */
+  window.addEventListener('load', onScrollNav);
+  setTimeout(onScrollNav, 150);
 
   /* ---------- Mobile Menu ---------- */
   var navToggle = document.getElementById('navToggle');
