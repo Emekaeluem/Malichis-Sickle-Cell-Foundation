@@ -184,6 +184,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   top: 0; left: 0; right: 0;
   z-index: 500;
   padding: 22px 0;
+  background: linear-gradient(180deg, rgba(10,0,20,0.32) 0%, rgba(10,0,20,0.08) 65%, rgba(10,0,20,0) 100%);
   transition: padding 0.4s var(--ease), background 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 .nav-inner {
@@ -511,6 +512,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   overflow: hidden;
   box-shadow: var(--shadow-lift);
   aspect-ratio: 5/6;
+  min-height: 260px;
 }
 .about-media-frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08) translate3d(0, var(--parallax-y, 0px), 0); will-change: transform; }
 .about-media-badge {
@@ -575,6 +577,7 @@ section { position: relative; scroll-snap-align: start; scroll-snap-stop: always
   overflow: hidden;
   box-shadow: var(--shadow-soft);
   aspect-ratio: 4/5;
+  min-height: 140px;
   will-change: transform;
 }
 .mg-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
