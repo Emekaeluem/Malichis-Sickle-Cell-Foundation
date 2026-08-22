@@ -63,14 +63,14 @@
   .preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
   .preloader-logo { width: 44px; height: 44px; object-fit: contain; }
   .preloader-track {
-    width: 6px; height: 130px; border-radius: 100px;
+    width: 220px; height: 6px; border-radius: 100px;
     background: var(--lavender-deep); overflow: hidden;
-    display: flex; align-items: flex-end;
+    display: flex; align-items: center;
   }
   .preloader-fill {
-    width: 100%; height: 0%; border-radius: 100px;
-    background: linear-gradient(180deg, var(--orange), var(--purple));
-    transition: height 0.1s linear;
+    height: 100%; width: 0%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--purple), var(--orange));
+    transition: width 0.1s linear;
   }
   .preloader-percent { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; color: var(--purple-dark); letter-spacing: -0.01em; }
   .preloader-text { font-size: 0.8rem; font-weight: 700; color: var(--purple); letter-spacing: 0.04em; }
@@ -581,7 +581,7 @@
     function tick(now) {
       const elapsed = now - start;
       const pct = Math.min(100, Math.round((elapsed / duration) * 100));
-      fillEl.style.height = pct + '%';
+      fillEl.style.width = pct + '%';
       percentEl.textContent = pct + '%';
       if (pct < 100) {
         requestAnimationFrame(tick);
