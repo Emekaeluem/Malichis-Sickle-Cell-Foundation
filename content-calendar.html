@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Calendar — 1000 Man Sickle Cell Awareness Walk | Malichis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #680082;
+    --purple-dark: #470059;
+    --purple-mid: #8a2fae;
+    --purple-tint: #f4eaf9;
+    --orange: #FF6F0D;
+    --orange-light: #ff9152;
+    --orange-dark: #d95c00;
+    --white: #FFFFFF;
+    --bg-soft: #F8F9FC;
+    --lavender: #f4eefb;
+    --lavender-deep: #ede1f7;
+    --ink: #1e1530;
+    --ink-soft: #6a637f;
+    --ink-faint: #9791a8;
+    --glass-bg: rgba(255, 255, 255, 0.66);
+    --glass-bg-strong: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-soft: 0 20px 50px rgba(104, 0, 130, 0.08);
+    --shadow-lift: 0 30px 80px rgba(104, 0, 130, 0.16);
+    --shadow-btn: 0 14px 34px rgba(255, 111, 13, 0.32);
+    --radius-xl: 40px;
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --radius-sm: 12px;
+    --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --font-serif: 'Fraunces', serif;
+    --ease: cubic-bezier(.16, .84, .44, 1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-display);
+    color: var(--ink);
+    background: var(--bg-soft);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; }
+
+  /* ---------- decorative bloom backdrop (signature motif, echoes the site) ---------- */
+  .bg-blooms { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .bloom-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+  }
+  .bloom-1 { width: 520px; height: 520px; top: -180px; right: -160px; background: radial-gradient(circle, var(--orange-light), transparent 70%); }
+  .bloom-2 { width: 480px; height: 480px; bottom: -220px; left: -180px; background: radial-gradient(circle, var(--purple-mid), transparent 70%); opacity: 0.22; }
+
+  /* ---------- topbar ---------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 5vw;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: 0 8px 34px rgba(104,0,130,0.06);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 52px; height: 52px; object-fit: contain; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .brand-text strong { color: var(--purple); font-size: 1rem; font-weight: 800; }
+  .brand-text span { color: var(--ink-soft); font-size: 0.78rem; font-weight: 600; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 100px;
+    font-weight: 700; font-size: 0.86rem; font-family: inherit;
+    border: none; cursor: pointer;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .btn-ghost-purple { background: var(--purple-tint); color: var(--purple); }
+  .btn-ghost-purple:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
+
+  /* ---------- hero ---------- */
+  .hero { max-width: 980px; margin: 0 auto; padding: 64px 5vw 20px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--purple-tint); color: var(--purple);
+    font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em;
+    padding: 9px 18px; border-radius: 100px;
+  }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5vw, 3.2rem);
+    color: var(--purple-dark);
+    margin: 18px 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .hero p.lead { color: var(--ink-soft); font-size: 1.05rem; max-width: 620px; margin: 0 auto 34px; }
+
+  /* ---------- controls ---------- */
+  .controls {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 18px; margin-bottom: 30px;
+  }
+  .control-card {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+    box-shadow: var(--shadow-soft);
+  }
+  .control-card label { font-size: 0.8rem; font-weight: 700; color: var(--purple); display: block; margin-bottom: 3px; }
+  .control-card input[type="date"] {
+    font-family: inherit; font-size: 0.92rem; color: var(--ink);
+    border: none; background: transparent; font-weight: 600;
+  }
+  .countdown-badge { font-size: 0.78rem; color: var(--orange-dark); font-weight: 700; margin-top: 2px; }
+
+  .progress-card { min-width: 220px; }
+  .progress-track {
+    width: 100%; height: 10px; border-radius: 100px;
+    background: var(--lavender-deep); overflow: hidden; margin-top: 6px;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--purple), var(--orange));
+    width: 0%; transition: width 0.5s var(--ease);
+  }
+  .progress-label { font-size: 0.78rem; color: var(--ink-soft); font-weight: 700; margin-top: 6px; }
+
+  /* ---------- filter chips ---------- */
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 46px; }
+  .chip {
+    font-family: inherit; cursor: pointer;
+    padding: 10px 20px; border-radius: 100px; font-size: 0.83rem; font-weight: 700;
+    border: 1.5px solid transparent; background: var(--white); color: var(--ink-soft);
+    box-shadow: 0 4px 14px rgba(104,0,130,0.06);
+    transition: all 0.3s var(--ease);
+  }
+  .chip[data-active="true"] { background: var(--purple); color: var(--white); box-shadow: var(--shadow-btn); }
+  .chip .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+
+  /* ---------- calendar ---------- */
+  main { max-width: 1180px; margin: 0 auto; padding: 0 5vw 90px; }
+  .week-block { margin-bottom: 48px; }
+  .week-heading {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;
+    font-family: var(--font-serif); color: var(--purple-dark); font-size: 1.3rem; font-weight: 600;
+  }
+  .week-heading span { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+
+  .day-card {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 20px;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative;
+  }
+  .day-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .day-card.is-hidden { display: none; }
+  .day-card.is-posted { opacity: 0.55; }
+  .day-card.is-posted .day-title { text-decoration: line-through; }
+
+  .day-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .day-num { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--purple-dark); }
+  .day-weekday { font-size: 0.72rem; font-weight: 700; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .pillar-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.02em;
+    padding: 5px 12px; border-radius: 100px; width: fit-content;
+  }
+  .format-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); }
+  .format-tag svg { width: 13px; height: 13px; }
+
+  .day-title {
+    font-size: 0.92rem; font-weight: 600; color: var(--ink); line-height: 1.45;
+    outline: none; flex-grow: 1;
+  }
+  .day-title[contenteditable="true"] { background: var(--lavender); border-radius: 8px; padding: 6px 8px; margin: -6px -8px; }
+
+  .day-card-actions { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--glass-border); }
+  .edit-btn {
+    background: none; border: none; cursor: pointer; color: var(--purple-mid);
+    display: flex; align-items: center; gap: 5px; font-size: 0.74rem; font-weight: 700; font-family: inherit;
+    padding: 4px 8px; border-radius: 8px;
+  }
+  .edit-btn:hover { background: var(--purple-tint); }
+  .posted-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.74rem; font-weight: 700; color: var(--ink-soft); user-select: none; }
+  .posted-toggle input { accent-color: var(--purple); width: 15px; height: 15px; cursor: pointer; }
+
+  /* ---------- footer ---------- */
+  .page-footer { text-align: center; padding: 40px 5vw 60px; color: var(--ink-faint); font-size: 0.8rem; }
+  .page-footer strong { color: var(--purple-mid); }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--white); padding: 12px 24px; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 600; box-shadow: var(--shadow-lift);
+    opacity: 0; pointer-events: none; transition: all 0.4s var(--ease); z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 16px 5vw; }
+    .brand-text span { display: none; }
+    .day-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media print {
+    .topbar, .controls, .filter-chips, .edit-btn, .toast, .bg-blooms { display: none !important; }
+    .day-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blooms" aria-hidden="true">
+  <div class="bloom-blob bloom-1"></div>
+  <div class="bloom-blob bloom-2"></div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo">
+    <div class="brand-text">
+      <strong>Malichis Sickle Cell Foundation</strong>
+      <span>1000 Man Awareness Walk · Content Calendar</span>
+    </div>
+  </div>
+  <a class="btn btn-ghost-purple" href="index.html">← Back to site</a>
+</header>
+
+<section class="hero">
+  <span class="eyebrow">30-Day Rollout Plan</span>
+  <h1>1000 Man Walk<br>Content Calendar</h1>
+  <p class="lead">Every post, mapped to a pillar and a format, from first announcement to the final "we walked 1000 strong." Set the walk's start date below to line the plan up with real dates, tick off what's posted, and click any headline to edit it.</p>
+
+  <div class="controls">
+    <div class="control-card">
+      <div>
+        <label for="startDate">Campaign start date</label>
+        <input type="date" id="startDate">
+        <div class="countdown-badge" id="countdownBadge"></div>
+      </div>
+    </div>
+    <div class="control-card progress-card">
+      <div style="width:100%">
+        <label>Progress</label>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">0 / 30 posted</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-chips" id="filterChips"></div>
+</section>
+
+<main id="calendarRoot"></main>
+
+<footer class="page-footer">
+  Built for <strong>Malichis Sickle Cell Foundation</strong> — #1000ManWalkNG · Content Calendar v1
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PILLARS = {
+    edu:       { label: 'Education & Awareness',     color: 'var(--purple)',      tint: 'var(--purple-tint)' },
+    movement:  { label: '1000 Man Movement',          color: 'var(--orange)',      tint: 'rgba(255,111,13,0.1)' },
+    stories:   { label: 'Stories & Human Impact',      color: 'var(--purple-mid)',  tint: 'var(--lavender-deep)' },
+    community: { label: 'Community, Action & Impact',  color: 'var(--orange-dark)', tint: 'rgba(217,92,0,0.1)' },
+    engage:    { label: 'Engagement',                  color: 'var(--ink-soft)',    tint: 'var(--lavender)' }
+  };
+
+  const ICONS = {
+    video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg>',
+    graphic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>'
+  };
+
+  const CALENDAR = [
+    {day:1,  pillar:'edu',       format:'graphic', title:'What Is Sickle Cell Disease? — basic explainer'},
+    {day:2,  pillar:'movement',  format:'video',   title:'The Walk Is Coming — official reveal'},
+    {day:3,  pillar:'stories',   format:'video',   title:'Warrior story #1 — living with SS'},
+    {day:4,  pillar:'movement',  format:'graphic', title:'Why "1000 Men"? — meaning behind the movement'},
+    {day:5,  pillar:'edu',       format:'graphic', title:'Genotype 101 — AA, AS, SS explained'},
+    {day:6,  pillar:'community', format:'graphic', title:'Volunteer With Us — how to sign up'},
+    {day:7,  pillar:'engage',    format:'graphic', title:'Poll: "Do you know your genotype?"'},
+    {day:8,  pillar:'edu',       format:'graphic', title:'Myth vs Fact carousel'},
+    {day:9,  pillar:'movement',  format:'video',   title:'Registration Is Open'},
+    {day:10, pillar:'stories',   format:'video',   title:'Caregiver perspective — a mother\'s story'},
+    {day:11, pillar:'movement',  format:'video',   title:'Meet an Ambassador'},
+    {day:12, pillar:'edu',       format:'graphic', title:'Early Diagnosis & Newborn Screening'},
+    {day:13, pillar:'community', format:'graphic', title:'Partner / Sponsor Spotlight'},
+    {day:14, pillar:'engage',    format:'graphic', title:'Repost a partner shoutout / throwback'},
+    {day:15, pillar:'edu',       format:'graphic', title:'Managing Pain Crises — daily life tips'},
+    {day:16, pillar:'movement',  format:'graphic', title:'2-Week Countdown Begins'},
+    {day:17, pillar:'stories',   format:'video',   title:'Warrior story #2'},
+    {day:18, pillar:'movement',  format:'graphic', title:'Route Reveal — what to expect on walk day'},
+    {day:19, pillar:'edu',       format:'graphic', title:'Nutrition & Lifestyle for Warriors'},
+    {day:20, pillar:'community', format:'video',   title:'Volunteer Behind-the-Scenes Prep'},
+    {day:21, pillar:'engage',    format:'graphic', title:'"Ask Us Anything" Q&A sticker'},
+    {day:22, pillar:'edu',       format:'graphic', title:'Where to Get Tested — free genotype centers'},
+    {day:23, pillar:'movement',  format:'video',   title:'1-Week Countdown'},
+    {day:24, pillar:'stories',   format:'video',   title:'Survivor Triumph Story'},
+    {day:25, pillar:'movement',  format:'graphic', title:'Bring-a-Friend Challenge'},
+    {day:26, pillar:'edu',       format:'graphic', title:'FAQ — cause & walk logistics'},
+    {day:27, pillar:'community', format:'video',   title:'Meet the Volunteers — team spotlight'},
+    {day:28, pillar:'engage',    format:'graphic', title:'Countdown sticker / repost UGC'},
+    {day:29, pillar:'edu',       format:'graphic', title:'Last Chance — final awareness push'},
+    {day:30, pillar:'movement',  format:'video',   title:'"Tomorrow, We Walk" — final reminder'}
+  ];
+
+  // in-memory state (session only — see note below the calendar)
+  let state = CALENDAR.map(c => ({ ...c, posted: false }));
+  let activeFilter = 'all';
+  let startDate = null;
+
+  const root = document.getElementById('calendarRoot');
+  const chipsEl = document.getElementById('filterChips');
+  const startInput = document.getElementById('startDate');
+  const countdownBadge = document.getElementById('countdownBadge');
+  const toast = document.getElementById('toast');
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  function buildChips() {
+    const all = [{ key: 'all', label: 'All Posts', color: 'var(--ink)' }, ...Object.entries(PILLARS).map(([k, v]) => ({ key: k, label: v.label, color: v.color }))];
+    chipsEl.innerHTML = all.map(p => `
+      <button class="chip" data-key="${p.key}" data-active="${activeFilter === p.key}">
+        ${p.key !== 'all' ? `<span class="dot" style="background:${p.color}"></span>` : ''}${p.label}
+      </button>
+    `).join('');
+    chipsEl.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.key;
+        buildChips();
+        applyFilter();
+      });
+    });
+  }
+
+  function weekdayFor(dayIndex) {
+    if (startDate) {
+      const d = new Date(startDate);
+      d.setDate(d.getDate() + (dayIndex - 1));
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' });
+    }
+    const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    return names[(dayIndex - 1) % 7];
+  }
+
+  function render() {
+    const weeks = [[],[],[],[],[]];
+    state.forEach(item => weeks[Math.floor((item.day - 1) / 7)].push(item));
+
+    root.innerHTML = weeks.map((week, i) => {
+      if (!week.length) return '';
+      return `
+        <div class="week-block">
+          <div class="week-heading">Week ${i + 1} <span>${week.length} posts</span></div>
+          <div class="day-grid">
+            ${week.map(item => dayCard(item)).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    root.querySelectorAll('.day-card').forEach(card => {
+      const day = Number(card.dataset.day);
+      const item = state.find(s => s.day === day);
+
+      card.querySelector('.edit-btn').addEventListener('click', () => {
+        const titleEl = card.querySelector('.day-title');
+        titleEl.contentEditable = 'true';
+        titleEl.focus();
+        document.getSelection().selectAllChildren(titleEl);
+      });
+      card.querySelector('.day-title').addEventListener('blur', (e) => {
+        e.target.contentEditable = 'false';
+        item.title = e.target.textContent.trim();
+        showToast('Updated — remember this resets on reload');
+      });
+      card.querySelector('.posted-checkbox').addEventListener('change', (e) => {
+        item.posted = e.target.checked;
+        card.classList.toggle('is-posted', item.posted);
+        updateProgress();
+      });
+    });
+
+    applyFilter();
+    updateProgress();
+  }
+
+  function dayCard(item) {
+    const p = PILLARS[item.pillar];
+    return `
+      <div class="day-card" data-day="${item.day}" data-pillar="${item.pillar}">
+        <div class="day-card-top">
+          <span class="day-num">${String(item.day).padStart(2,'0')}</span>
+          <span class="day-weekday">${weekdayFor(item.day)}</span>
+        </div>
+        <span class="pillar-badge" style="background:${p.tint}; color:${p.color}">${p.label}</span>
+        <span class="format-tag" style="color:${p.color}">${ICONS[item.format]} ${item.format === 'video' ? 'Video' : 'Graphic'}</span>
+        <div class="day-title">${item.title}</div>
+        <div class="day-card-actions">
+          <button class="edit-btn">✎ Edit</button>
+          <label class="posted-toggle">
+            <input type="checkbox" class="posted-checkbox" ${item.posted ? 'checked' : ''}>
+            Posted
+          </label>
+        </div>
+      </div>
+    `;
+  }
+
+  function applyFilter() {
+    document.querySelectorAll('.day-card').forEach(card => {
+      const match = activeFilter === 'all' || card.dataset.pillar === activeFilter;
+      card.classList.toggle('is-hidden', !match);
+    });
+  }
+
+  function updateProgress() {
+    const posted = state.filter(s => s.posted).length;
+    document.getElementById('progressFill').style.width = `${(posted / state.length) * 100}%`;
+    document.getElementById('progressLabel').textContent = `${posted} / ${state.length} posted`;
+  }
+
+  startInput.addEventListener('change', (e) => {
+    startDate = e.target.value ? new Date(e.target.value + 'T00:00:00') : null;
+    render();
+    if (startDate) {
+      const walkDate = new Date(startDate);
+      walkDate.setDate(walkDate.getDate() + 29);
+      const today = new Date();
+      const daysLeft = Math.ceil((walkDate - today) / (1000 * 60 * 60 * 24));
+      countdownBadge.textContent = `Walk day: ${walkDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}` + (daysLeft >= 0 ? ` · ${daysLeft} days to go` : '');
+    } else {
+      countdownBadge.textContent = '';
+    }
+  });
+
+  buildChips();
+  render();
+</script>
+
+</body>
+</html>
