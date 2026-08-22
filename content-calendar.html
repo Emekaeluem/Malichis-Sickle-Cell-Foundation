@@ -408,7 +408,22 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_WsndDSxr4ZGZm3AgeeUldcv-1r3qsSM",
+    authDomain: "malichis-content-calendar.firebaseapp.com",
+    projectId: "malichis-content-calendar",
+    storageBucket: "malichis-content-calendar.firebasestorage.app",
+    messagingSenderId: "1010178271458",
+    appId: "1:1010178271458:web:0eb1282ef32670dd1616bb"
+  };
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+  const calendarDocRef = doc(db, "malichisCalendar", "state");
+
   // ---- change this to update the team passcode ----
   const PASSCODE = 'Malichis1000';
 
@@ -468,28 +483,58 @@
     return format === 'video' ? ['instagram','tiktok','facebook'] : ['instagram','facebook'];
   }
 
-  // ---- persistence (saves to this browser, on this device) ----
+  // ---- persistence: local cache for instant paint + Firestore for cross-device sync ----
   const STORAGE_KEY = 'malichis1000WalkCalendar';
 
-  function loadSaved() {
+  function loadLocalCache() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       return raw ? JSON.parse(raw) : null;
     } catch (e) {
-      return null; // private browsing / storage blocked — fall back to defaults
+      return null; // private browsing / storage blocked
+    }
+  }
+
+  function cacheLocally(payload) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {
+      // storage unavailable — Firestore sync still works
+    }
+  }
+
+  function buildPayload() {
+    return {
+      startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
+      items: state.map(({ day, title, posted, format, platforms }) => ({ day, title, posted, format, platforms }))
+    };
+  }
+
+  function applyPayload(payload) {
+    if (!payload) return;
+    if (payload.startDate) {
+      startDate = new Date(payload.startDate + 'T00:00:00');
+      startInput.value = payload.startDate;
+    }
+    if (Array.isArray(payload.items)) {
+      payload.items.forEach(si => {
+        const target = state.find(s => s.day === si.day);
+        if (target) {
+          target.title = si.title ?? target.title;
+          target.posted = !!si.posted;
+          target.format = si.format ?? target.format;
+          target.platforms = Array.isArray(si.platforms) ? si.platforms : target.platforms;
+        }
+      });
     }
   }
 
   function persist() {
-    try {
-      const payload = {
-        startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
-        items: state.map(({ day, title, posted, format, platforms }) => ({ day, title, posted, format, platforms }))
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    } catch (e) {
-      // storage unavailable — edits still work for this session, just won't survive reload
-    }
+    const payload = buildPayload();
+    cacheLocally(payload);
+    setDoc(calendarDocRef, payload).catch(() => {
+      // offline or blocked — local cache still has the edit
+    });
   }
 
   let state = CALENDAR.map(c => ({ ...c, posted: false, platforms: defaultPlatforms(c.format) }));
@@ -502,25 +547,19 @@
   const countdownBadge = document.getElementById('countdownBadge');
   const toast = document.getElementById('toast');
 
-  // restore any previously saved edits for this browser
-  const saved = loadSaved();
-  if (saved) {
-    if (saved.startDate) {
-      startDate = new Date(saved.startDate + 'T00:00:00');
-      startInput.value = saved.startDate;
+  // paint instantly from this browser's cache, then let Firestore take over as the shared source of truth
+  applyPayload(loadLocalCache());
+
+  // live sync — an edit on any device updates everyone else's screen automatically
+  onSnapshot(calendarDocRef, (snap) => {
+    if (snap.exists()) {
+      const data = snap.data();
+      applyPayload(data);
+      cacheLocally(data);
+      render();
+      refreshCountdown();
     }
-    if (Array.isArray(saved.items)) {
-      saved.items.forEach(si => {
-        const target = state.find(s => s.day === si.day);
-        if (target) {
-          target.title = si.title ?? target.title;
-          target.posted = !!si.posted;
-          target.format = si.format ?? target.format;
-          target.platforms = Array.isArray(si.platforms) ? si.platforms : target.platforms;
-        }
-      });
-    }
-  }
+  });
 
   function showToast(msg) {
     toast.textContent = msg;
