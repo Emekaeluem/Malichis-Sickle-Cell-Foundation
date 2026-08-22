@@ -121,22 +121,23 @@
   /* ---------- topbar ---------- */
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: nowrap;
     padding: 20px 5vw;
     background: var(--glass-bg-strong);
     backdrop-filter: blur(16px) saturate(160%);
     box-shadow: 0 8px 34px rgba(104,0,130,0.06);
     position: sticky; top: 0; z-index: 20;
   }
-  .brand { display: flex; align-items: center; gap: 14px; }
-  .brand img { width: 52px; height: 52px; object-fit: contain; }
-  .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
-  .brand-text strong { color: var(--purple); font-size: 1rem; font-weight: 600; }
-  .brand-text span { color: var(--ink-soft); font-size: 0.78rem; font-weight: 400; }
+  .brand { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1 1 auto; }
+  .brand img { width: 52px; height: 52px; object-fit: contain; flex-shrink: 0; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .brand-text strong { color: var(--purple); font-size: 1rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand-text span { color: var(--ink-soft); font-size: 0.78rem; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 22px; border-radius: 100px;
     font-weight: 600; font-size: 0.86rem; font-family: inherit;
-    border: none; cursor: pointer;
+    border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0;
     transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
   }
   .btn-ghost-purple { background: var(--purple-tint); color: var(--purple); }
@@ -282,6 +283,7 @@
     .topbar { padding: 14px 5vw; }
     .brand img { width: 42px; height: 42px; }
     .brand-text span { display: none; }
+    .brand-text strong { font-size: 0.92rem; }
     .btn { padding: 9px 16px; font-size: 0.8rem; }
 
     .hero { padding: 40px 6vw 12px; }
@@ -307,6 +309,8 @@
   @media (max-width: 480px) {
     h1 { font-size: 1.85rem; }
     .eyebrow { font-size: 0.72rem; padding: 7px 14px; }
+    .btn-extra { display: none; }
+    .brand-text strong { font-size: 0.82rem; }
     .day-grid { grid-template-columns: 1fr; }
     .day-card { flex-direction: column; }
     .login-card { padding: 34px 24px; width: min(340px, 90vw); }
@@ -367,7 +371,7 @@
         <span>1000 Man Awareness Walk · Content Calendar</span>
       </div>
     </div>
-    <a class="btn btn-ghost-purple" href="index.html">← Back to site</a>
+    <a class="btn btn-ghost-purple" href="index.html">← Back<span class="btn-extra"> to site</span></a>
   </header>
 
   <section class="hero">
@@ -464,7 +468,30 @@
     return format === 'video' ? ['instagram','tiktok','facebook'] : ['instagram','facebook'];
   }
 
-  // in-memory state (session only — resets on reload, see note at bottom of chat reply)
+  // ---- persistence (saves to this browser, on this device) ----
+  const STORAGE_KEY = 'malichis1000WalkCalendar';
+
+  function loadSaved() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null; // private browsing / storage blocked — fall back to defaults
+    }
+  }
+
+  function persist() {
+    try {
+      const payload = {
+        startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
+        items: state.map(({ day, title, posted, format, platforms }) => ({ day, title, posted, format, platforms }))
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {
+      // storage unavailable — edits still work for this session, just won't survive reload
+    }
+  }
+
   let state = CALENDAR.map(c => ({ ...c, posted: false, platforms: defaultPlatforms(c.format) }));
   let activeFilter = 'all';
   let startDate = null;
@@ -474,6 +501,26 @@
   const startInput = document.getElementById('startDate');
   const countdownBadge = document.getElementById('countdownBadge');
   const toast = document.getElementById('toast');
+
+  // restore any previously saved edits for this browser
+  const saved = loadSaved();
+  if (saved) {
+    if (saved.startDate) {
+      startDate = new Date(saved.startDate + 'T00:00:00');
+      startInput.value = saved.startDate;
+    }
+    if (Array.isArray(saved.items)) {
+      saved.items.forEach(si => {
+        const target = state.find(s => s.day === si.day);
+        if (target) {
+          target.title = si.title ?? target.title;
+          target.posted = !!si.posted;
+          target.format = si.format ?? target.format;
+          target.platforms = Array.isArray(si.platforms) ? si.platforms : target.platforms;
+        }
+      });
+    }
+  }
 
   function showToast(msg) {
     toast.textContent = msg;
@@ -535,12 +582,14 @@
       card.querySelector('.day-title').addEventListener('blur', (e) => {
         e.target.contentEditable = 'false';
         item.title = e.target.textContent.trim();
-        showToast('Updated — remember this resets on reload');
+        persist();
+        showToast('Saved');
       });
       card.querySelector('.posted-checkbox').addEventListener('change', (e) => {
         item.posted = e.target.checked;
         card.classList.toggle('is-posted', item.posted);
         updateProgress();
+        persist();
       });
       card.querySelector('.format-tag').addEventListener('click', () => {
         item.format = item.format === 'video' ? 'graphic' : 'video';
@@ -548,6 +597,7 @@
         const p = PILLARS[item.pillar];
         tagEl.style.color = p.color;
         tagEl.innerHTML = `${FORMAT_ICONS[item.format]} ${item.format === 'video' ? 'Video' : 'Graphic'}`;
+        persist();
         showToast(`Switched to ${item.format === 'video' ? 'Video' : 'Graphic'}`);
       });
       card.querySelectorAll('.platform-icon').forEach(iconBtn => {
@@ -556,6 +606,7 @@
           const idx = item.platforms.indexOf(key);
           if (idx > -1) item.platforms.splice(idx, 1); else item.platforms.push(key);
           iconBtn.classList.toggle('active', item.platforms.includes(key));
+          persist();
         });
       });
     });
@@ -603,9 +654,7 @@
     document.getElementById('progressLabel').textContent = `${posted} / ${state.length} posted`;
   }
 
-  startInput.addEventListener('change', (e) => {
-    startDate = e.target.value ? new Date(e.target.value + 'T00:00:00') : null;
-    render();
+  function refreshCountdown() {
     if (startDate) {
       const walkDate = new Date(startDate);
       walkDate.setDate(walkDate.getDate() + 29);
@@ -615,6 +664,13 @@
     } else {
       countdownBadge.textContent = '';
     }
+  }
+
+  startInput.addEventListener('change', (e) => {
+    startDate = e.target.value ? new Date(e.target.value + 'T00:00:00') : null;
+    render();
+    refreshCountdown();
+    persist();
   });
 
   // ---- preloader → login flow ----
@@ -667,6 +723,7 @@
 
   buildChips();
   render();
+  refreshCountdown();
   startPreloader();
 </script>
 
