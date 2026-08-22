@@ -272,11 +272,57 @@
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  @media (max-width: 640px) {
-    .topbar { padding: 16px 5vw; }
-    .brand-text span { display: none; }
-    .day-grid { grid-template-columns: 1fr 1fr; }
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .hero { padding: 48px 6vw 16px; }
+    .day-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
   }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 14px 5vw; }
+    .brand img { width: 42px; height: 42px; }
+    .brand-text span { display: none; }
+    .btn { padding: 9px 16px; font-size: 0.8rem; }
+
+    .hero { padding: 40px 6vw 12px; }
+    .hero p.lead { font-size: 0.94rem; padding: 0 4px; }
+
+    .controls { flex-direction: column; align-items: stretch; gap: 12px; }
+    .control-card { width: 100%; justify-content: center; }
+    .progress-card { min-width: unset; }
+
+    .filter-chips { gap: 8px; }
+    .chip { padding: 8px 16px; font-size: 0.78rem; }
+
+    main { padding: 0 5vw 60px; }
+    .week-heading { font-size: 1.15rem; margin-bottom: 14px; }
+    .day-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .day-card { padding: 16px 14px; gap: 10px; border-radius: var(--radius-md); }
+    .day-title { font-size: 0.85rem; }
+    .pillar-badge { font-size: 0.64rem; padding: 4px 10px; }
+    .platform-icon { width: 30px; height: 30px; }
+    .day-card-actions { flex-wrap: wrap; gap: 8px; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.85rem; }
+    .eyebrow { font-size: 0.72rem; padding: 7px 14px; }
+    .day-grid { grid-template-columns: 1fr; }
+    .day-card { flex-direction: column; }
+    .login-card { padding: 34px 24px; width: min(340px, 90vw); }
+    .login-card img { width: 50px; height: 50px; }
+    .preloader-track { width: min(200px, 62vw); }
+    .toast { width: 88vw; text-align: center; left: 6vw; right: 6vw; transform: translateY(20px); }
+    .toast.show { transform: translateY(0); }
+  }
+
+  @media (max-width: 360px) {
+    .hero { padding: 32px 5vw 10px; }
+    .control-card { padding: 12px 16px; }
+    .day-card { padding: 14px 12px; }
+    .brand-text strong { font-size: 0.88rem; }
+  }
+
   @media print {
     .topbar, .controls, .filter-chips, .edit-btn, .toast, .bg-blooms, .preloader, .login-gate { display: none !important; }
     .day-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
