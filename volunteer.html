@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volunteer | Malichis Sickle Cell Foundation — 1000 Man Walk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #680082;
+    --purple-dark: #470059;
+    --purple-mid: #8a2fae;
+    --purple-tint: #f4eaf9;
+    --orange: #FF6F0D;
+    --orange-light: #ff9152;
+    --orange-dark: #d95c00;
+    --white: #FFFFFF;
+    --bg-soft: #F8F9FC;
+    --lavender: #f4eefb;
+    --lavender-deep: #ede1f7;
+    --ink: #1e1530;
+    --ink-soft: #6a637f;
+    --ink-faint: #9791a8;
+    --glass-bg-strong: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-soft: 0 20px 50px rgba(104, 0, 130, 0.08);
+    --shadow-lift: 0 30px 80px rgba(104, 0, 130, 0.16);
+    --shadow-btn: 0 14px 34px rgba(255, 111, 13, 0.32);
+    --radius-xl: 40px;
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --font-serif: 'Fraunces', serif;
+    --ease: cubic-bezier(.16, .84, .44, 1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--font-display); color: var(--ink); background: var(--bg-soft); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; }
+  img { max-width: 100%; }
+
+  /* ---------- topbar ---------- */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5vw; gap: 12px; flex-wrap: nowrap;
+    background: rgba(30, 21, 48, 0.35);
+    backdrop-filter: blur(10px);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
+  .brand img { width: 42px; height: 42px; object-fit: contain; flex-shrink: 0; }
+  .brand strong { color: var(--white); font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 100px;
+    font-weight: 700; font-size: 0.85rem; font-family: inherit;
+    border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .btn-light { background: rgba(255,255,255,0.16); color: var(--white); border: 1px solid rgba(255,255,255,0.3); }
+  .btn-light:hover { background: rgba(255,255,255,0.28); }
+  .btn-primary { background: var(--orange); color: var(--white); box-shadow: var(--shadow-btn); }
+  .btn-primary:hover { transform: translateY(-2px); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    overflow: hidden; background: linear-gradient(160deg, var(--purple-dark), var(--purple));
+  }
+  .hero video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+  }
+  .hero-scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(30,15,45,0.55) 0%, rgba(30,15,45,0.35) 45%, rgba(30,15,45,0.75) 100%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; padding: 0 6vw; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em;
+    padding: 9px 18px; border-radius: 100px;
+  }
+  .hero-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+  .hero h1 {
+    font-family: var(--font-serif); font-weight: 600; color: var(--white);
+    font-size: clamp(2.4rem, 6vw, 4rem); margin: 20px 0 14px; letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .hero p.lead { color: rgba(255,255,255,0.88); font-size: 1.1rem; max-width: 560px; margin: 0 auto 34px; }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .scroll-hint {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2;
+    color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .scroll-hint svg { width: 18px; height: 18px; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  /* ---------- section shell ---------- */
+  section.block { max-width: 1080px; margin: 0 auto; padding: 90px 6vw; }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--purple-tint); color: var(--purple);
+    font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em;
+    padding: 8px 16px; border-radius: 100px; margin-bottom: 16px;
+  }
+  .section-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+  h2 { font-family: var(--font-serif); font-weight: 600; color: var(--purple-dark); font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin: 0 0 14px; letter-spacing: -0.01em; }
+  .section-sub { color: var(--ink-soft); font-size: 1.02rem; max-width: 620px; margin-bottom: 48px; }
+
+  /* ---------- why volunteer ---------- */
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .why-card {
+    background: var(--white); border-radius: var(--radius-lg); padding: 32px 26px;
+    box-shadow: var(--shadow-soft); text-align: left;
+  }
+  .why-icon {
+    width: 52px; height: 52px; border-radius: 16px; background: var(--purple-tint); color: var(--purple);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  }
+  .why-icon svg { width: 24px; height: 24px; }
+  .why-card h3 { font-size: 1.1rem; font-weight: 700; margin: 0 0 8px; color: var(--ink); }
+  .why-card p { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
+
+  /* ---------- roles ---------- */
+  .roles-section { background: var(--lavender); }
+  .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .role-card {
+    background: var(--white); border-radius: var(--radius-md); padding: 26px 22px;
+    box-shadow: var(--shadow-soft); text-align: left; cursor: pointer; border: 2px solid transparent;
+    transition: all 0.3s var(--ease);
+  }
+  .role-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .role-card.is-selected { border-color: var(--orange); }
+  .role-icon {
+    width: 44px; height: 44px; border-radius: 12px; background: rgba(255,111,13,0.1); color: var(--orange-dark);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .role-icon svg { width: 20px; height: 20px; }
+  .role-card h3 { font-size: 1rem; font-weight: 700; margin: 0 0 6px; color: var(--ink); }
+  .role-card p { color: var(--ink-soft); font-size: 0.86rem; margin: 0; }
+  .role-pick-hint { font-size: 0.74rem; color: var(--purple-mid); font-weight: 700; margin-top: 10px; }
+
+  /* ---------- form ---------- */
+  .form-section { text-align: center; }
+  .form-card {
+    background: var(--white); border-radius: var(--radius-xl); padding: 48px 5vw;
+    box-shadow: var(--shadow-lift); text-align: left; max-width: 760px; margin: 0 auto;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 10px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label { font-size: 0.82rem; font-weight: 700; color: var(--purple); }
+  .form-field input, .form-field select, .form-field textarea {
+    font-family: inherit; font-size: 0.94rem; color: var(--ink);
+    border: 1.5px solid var(--lavender-deep); background: var(--bg-soft);
+    border-radius: 12px; padding: 12px 14px; outline: none;
+    transition: border-color 0.25s var(--ease);
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--purple-mid); }
+  .form-field textarea { resize: vertical; min-height: 80px; }
+  .submit-row { margin-top: 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .submit-btn {
+    background: var(--orange); color: var(--white); border: none; border-radius: 100px;
+    padding: 14px 32px; font-weight: 700; font-size: 0.96rem; cursor: pointer; font-family: inherit;
+    box-shadow: var(--shadow-btn); transition: transform 0.3s var(--ease);
+  }
+  .submit-btn:hover { transform: translateY(-2px); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-error { color: #d64545; font-size: 0.84rem; font-weight: 600; }
+
+  .success-state { display: none; text-align: center; padding: 20px 0; }
+  .success-state.show { display: block; }
+  .success-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--purple-tint); color: var(--purple); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .success-icon svg { width: 30px; height: 30px; }
+  .success-state h3 { font-family: var(--font-serif); font-weight: 600; color: var(--purple-dark); font-size: 1.5rem; margin: 0 0 10px; }
+  .success-state p { color: var(--ink-soft); max-width: 420px; margin: 0 auto; }
+
+  footer.page-footer { text-align: center; padding: 40px 6vw 60px; color: var(--ink-faint); font-size: 0.8rem; }
+  footer.page-footer strong { color: var(--purple-mid); }
+
+  @media (max-width: 900px) {
+    .why-grid, .role-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .brand strong { display: none; }
+    .btn { padding: 9px 16px; font-size: 0.8rem; }
+    section.block { padding: 64px 6vw; }
+    .why-grid, .role-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-card { padding: 34px 6vw; }
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo">
+    <strong>Malichis Sickle Cell Foundation</strong>
+  </div>
+  <a class="btn btn-light" href="index.html">← Back to site</a>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline poster="images/logo.png">
+    <source src="videos/volunteer.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">#1000ManWalkNG</span>
+    <h1>Be Part Of Their Strength</h1>
+    <p class="lead">A thousand men are walking for sickle cell awareness — and it takes a team behind them to make it happen. Give a few hours, become part of the movement.</p>
+    <div class="hero-ctas">
+      <a href="#signup" class="btn btn-primary">Volunteer Now</a>
+      <a href="#roles" class="btn btn-light">See the Roles</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    Scroll to learn more
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<section class="block">
+  <span class="section-eyebrow">Why Volunteer</span>
+  <h2>Your time changes someone's walk</h2>
+  <p class="section-sub">Every warrior on the road that day is counting on people like you — behind the scenes, on the route, at the finish line.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <h3>Real, Direct Impact</h3>
+      <p>You're not on the sidelines — every role directly powers the walk and the awareness it creates.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="15" rx="2"/><path d="M16 3v6M8 3v6M3 11h18"/></svg></div>
+      <h3>Official Volunteer Shirt</h3>
+      <p>Every registered volunteer gets a walk-day shirt and a spot in the official team photos.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.5 14.5L7 21l5-3 5 3-1.5-6.5"/></svg></div>
+      <h3>Certificate of Service</h3>
+      <p>Get a signed certificate from the foundation — great for your CV, NYSC CDS, or portfolio.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block roles-section" id="roles">
+  <span class="section-eyebrow">Choose Your Role</span>
+  <h2>Where you're needed most</h2>
+  <p class="section-sub">Pick the role that fits you best — tap a card to pre-select it in the form below.</p>
+  <div class="role-grid" id="roleGrid">
+    <div class="role-card" data-role="Route Marshal">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+      <h3>Route Marshal</h3>
+      <p>Guide walkers along the route and help manage crowd flow and safety.</p>
+    </div>
+    <div class="role-card" data-role="Registration &amp; Check-in">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
+      <h3>Registration &amp; Check-in</h3>
+      <p>Welcome walkers, sign them in, and hand out wristbands at the start.</p>
+    </div>
+    <div class="role-card" data-role="Media &amp; Content Crew">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg></div>
+      <h3>Media &amp; Content Crew</h3>
+      <p>Capture photos and video, and help cover the day live on social media.</p>
+    </div>
+    <div class="role-card" data-role="Hydration Station">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2s6 7 6 12a6 6 0 01-12 0c0-5 6-12 6-12z"/></svg></div>
+      <h3>Hydration Station</h3>
+      <p>Run a water/refreshment point and keep walkers energized along the route.</p>
+    </div>
+    <div class="role-card" data-role="Logistics &amp; Setup">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z"/></svg></div>
+      <h3>Logistics &amp; Setup</h3>
+      <p>Help set up tents, signage, and sound before the walk — and pack down after.</p>
+    </div>
+    <div class="role-card" data-role="Medical Support Liaison">
+      <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
+      <h3>Medical Support Liaison</h3>
+      <p>Assist the partner medical team and help flag anyone needing attention.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block form-section" id="signup">
+  <span class="section-eyebrow">Sign Up</span>
+  <h2>Reserve your spot</h2>
+  <p class="section-sub" style="margin-left:auto;margin-right:auto;text-align:center;">Fill this in and our team will follow up with everything you need for walk day.</p>
+
+  <div class="form-card">
+    <form id="volunteerForm">
+      <div class="form-grid">
+        <div class="form-field full">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName" required placeholder="e.g. Adaeze Okonkwo">
+        </div>
+        <div class="form-field">
+          <label for="phone">Phone number (WhatsApp)</label>
+          <input type="tel" id="phone" required placeholder="080...">
+        </div>
+        <div class="form-field">
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" placeholder="you@email.com">
+        </div>
+        <div class="form-field">
+          <label for="role">Preferred role</label>
+          <select id="role" required>
+            <option value="">Select a role</option>
+            <option>Route Marshal</option>
+            <option>Registration &amp; Check-in</option>
+            <option>Media &amp; Content Crew</option>
+            <option>Hydration Station</option>
+            <option>Logistics &amp; Setup</option>
+            <option>Medical Support Liaison</option>
+            <option>Not sure — assign me anywhere</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="availability">Availability</label>
+          <select id="availability" required>
+            <option value="">Select availability</option>
+            <option>Walk day only</option>
+            <option>Walk day + setup/teardown</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label for="motivation">Why do you want to volunteer? (optional)</label>
+          <textarea id="motivation" placeholder="A sentence or two is fine"></textarea>
+        </div>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+        <span class="form-error" id="formError"></span>
+      </div>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h3>You're in!</h3>
+      <p>Thanks for signing up — our team will reach out on WhatsApp with next steps and your role details before walk day.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  Built for <strong>Malichis Sickle Cell Foundation</strong> — #1000ManWalkNG
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_WsndDSxr4ZGZm3AgeeUldcv-1r3qsSM",
+    authDomain: "malichis-content-calendar.firebaseapp.com",
+    projectId: "malichis-content-calendar",
+    storageBucket: "malichis-content-calendar.firebasestorage.app",
+    messagingSenderId: "1010178271458",
+    appId: "1:1010178271458:web:0eb1282ef32670dd1616bb"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const roleGrid = document.getElementById('roleGrid');
+  const roleSelect = document.getElementById('role');
+  const form = document.getElementById('volunteerForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formError = document.getElementById('formError');
+  const successState = document.getElementById('successState');
+
+  roleGrid.querySelectorAll('.role-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const role = card.dataset.role;
+      roleSelect.value = role;
+      roleGrid.querySelectorAll('.role-card').forEach(c => c.classList.remove('is-selected'));
+      card.classList.add('is-selected');
+      document.getElementById('signup').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    const payload = {
+      fullName: document.getElementById('fullName').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      role: document.getElementById('role').value,
+      availability: document.getElementById('availability').value,
+      motivation: document.getElementById('motivation').value.trim(),
+      submittedAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, "malichisVolunteers"), payload);
+      form.style.display = 'none';
+      successState.classList.add('show');
+    } catch (err) {
+      formError.textContent = "Something went wrong — please try again in a moment.";
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Application';
+    }
+  });
+</script>
+
+</body>
+</html>
