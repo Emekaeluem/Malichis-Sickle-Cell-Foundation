@@ -87,7 +87,7 @@
   .hero-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
   .hero h1 {
     font-family: var(--font-serif); font-weight: 600; color: var(--white);
-    font-size: clamp(2.4rem, 6vw, 4rem); margin: 20px 0 14px; letter-spacing: -0.01em; line-height: 1.1;
+    font-size: clamp(2.4rem, 6vw, 4rem); margin: 20px 0 32px; letter-spacing: -0.01em; line-height: 1.1;
   }
   .hero p.lead { color: rgba(255,255,255,0.88); font-size: 1.1rem; max-width: 560px; margin: 0 auto 34px; }
   .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -206,14 +206,13 @@
 </header>
 
 <section class="hero">
-  <video autoplay muted loop playsinline poster="images/logo.png">
-    <source src="videos/volunteer.mp4" type="video/mp4">
+  <video id="heroVideo" autoplay muted loop playsinline webkit-playsinline poster="images/logo.png">
+    <source src="images/volunteer.mp4" type="video/mp4">
   </video>
   <div class="hero-scrim"></div>
   <div class="hero-content">
     <span class="hero-eyebrow">#1000ManWalkNG</span>
     <h1>Be Part Of Their Strength</h1>
-    <p class="lead">A thousand men are walking for sickle cell awareness — and it takes a team behind them to make it happen. Give a few hours, become part of the movement.</p>
     <div class="hero-ctas">
       <a href="#signup" class="btn btn-primary">Volunteer Now</a>
       <a href="#roles" class="btn btn-light">See the Roles</a>
@@ -364,6 +363,33 @@
   };
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
+  // ---- force-reliable autoplay across devices ----
+  // Muted + playsinline covers most browsers, but some (older Android, low-power
+  // mode iOS) still block the initial autoplay attempt. This retries play()
+  // as soon as the video can play, and again on the first tap/scroll as a
+  // last-resort fallback — the video is always muted, so this is allowed
+  // everywhere without needing a user-facing "play" button.
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.playsInline = true;
+
+    const tryPlay = () => heroVideo.play().catch(() => {});
+    tryPlay();
+    heroVideo.addEventListener('loadeddata', tryPlay);
+    heroVideo.addEventListener('canplay', tryPlay);
+
+    const resumeOnInteraction = () => {
+      tryPlay();
+      window.removeEventListener('touchstart', resumeOnInteraction);
+      window.removeEventListener('click', resumeOnInteraction);
+      window.removeEventListener('scroll', resumeOnInteraction);
+    };
+    window.addEventListener('touchstart', resumeOnInteraction, { once: true, passive: true });
+    window.addEventListener('click', resumeOnInteraction, { once: true });
+    window.addEventListener('scroll', resumeOnInteraction, { once: true, passive: true });
+  }
 
   const roleGrid = document.getElementById('roleGrid');
   const roleSelect = document.getElementById('role');
