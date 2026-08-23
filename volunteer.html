@@ -249,7 +249,7 @@
 </header>
 
 <section class="hero">
-  <video id="heroVideo" autoplay muted playsinline webkit-playsinline poster="images/logo.png">
+  <video id="heroVideo" muted playsinline webkit-playsinline poster="images/logo.png">
     <source src="images/volunteer.mp4" type="video/mp4">
   </video>
   <div class="hero-scrim"></div>
@@ -439,31 +439,22 @@
   if (heroVideo) {
     heroVideo.muted = true;
     heroVideo.playsInline = true;
-
-    const tryPlay = () => heroVideo.play().catch(() => {});
-    heroVideo.addEventListener('loadeddata', tryPlay);
-    heroVideo.addEventListener('canplay', tryPlay);
-
-    // fallback in case someone interacts with the page before the welcome click somehow
-    const resumeOnInteraction = () => {
-      tryPlay();
-      window.removeEventListener('touchstart', resumeOnInteraction);
-      window.removeEventListener('scroll', resumeOnInteraction);
-    };
-    window.addEventListener('touchstart', resumeOnInteraction, { once: true, passive: true });
-    window.addEventListener('scroll', resumeOnInteraction, { once: true, passive: true });
+    // no autoplay, no pre-click play attempts — the video stays paused at
+    // frame 0 until the "Click to Continue" button starts it deliberately,
+    // so nobody misses the opening seconds while reading the welcome screen
   }
 
   // ---- welcome / click-to-enter overlay ----
   // Lock scroll until they click through, then dismiss the overlay and
   // start the video on that exact click — a real user gesture guarantees
-  // playback starts on every browser, no exceptions. Once playing, the
-  // video keeps looping on its own regardless of scrolling.
+  // playback starts on every browser, no exceptions, and starting it here
+  // (not on load) means it always begins from the very first frame.
   document.body.style.overflow = 'hidden';
   const welcomeOverlay = document.getElementById('welcomeOverlay');
   const welcomeEnterBtn = document.getElementById('welcomeEnterBtn');
   welcomeEnterBtn.addEventListener('click', () => {
     if (heroVideo) {
+      heroVideo.currentTime = 0;
       heroVideo.muted = false;
       heroVideo.play().catch(() => {
         // some browsers still refuse unmuted playback even after a click —
