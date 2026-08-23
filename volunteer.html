@@ -181,6 +181,32 @@
   footer.page-footer { text-align: center; padding: 40px 6vw 60px; color: var(--ink-faint); font-size: 0.8rem; }
   footer.page-footer strong { color: var(--purple-mid); }
 
+  /* ---------- welcome / click-to-enter overlay ---------- */
+  .welcome-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: linear-gradient(160deg, var(--purple-dark), var(--purple) 60%, var(--purple-mid));
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 6vw; transition: opacity 0.7s var(--ease), visibility 0.7s;
+  }
+  .welcome-overlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+  .welcome-card { max-width: 460px; }
+  .welcome-card img { width: 68px; height: 68px; object-fit: contain; margin-bottom: 20px; }
+  .welcome-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em;
+    padding: 8px 16px; border-radius: 100px; margin-bottom: 18px;
+  }
+  .welcome-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+  .welcome-card h2 { font-family: var(--font-serif); font-weight: 600; color: var(--white); font-size: clamp(1.7rem, 4vw, 2.2rem); margin: 0 0 12px; }
+  .welcome-card p { color: rgba(255,255,255,0.85); font-size: 0.98rem; margin: 0 0 30px; }
+  .welcome-enter-btn {
+    background: var(--orange); color: var(--white); border: none; border-radius: 100px;
+    padding: 15px 36px; font-weight: 700; font-size: 1rem; cursor: pointer; font-family: inherit;
+    box-shadow: var(--shadow-btn); transition: transform 0.3s var(--ease);
+  }
+  .welcome-enter-btn:hover { transform: translateY(-2px) scale(1.02); }
+
   @media (max-width: 900px) {
     .why-grid, .role-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -196,6 +222,16 @@
 </style>
 </head>
 <body>
+
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-card">
+    <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo">
+    <span class="welcome-eyebrow">#1000ManWalkNG</span>
+    <h2>Welcome</h2>
+    <p>You're one click away from being part of the movement. Tap below to enter and watch what we're building.</p>
+    <button class="welcome-enter-btn" id="welcomeEnterBtn">Click to Continue</button>
+  </div>
+</div>
 
 <header class="topbar">
   <div class="brand">
@@ -376,20 +412,32 @@
     heroVideo.playsInline = true;
 
     const tryPlay = () => heroVideo.play().catch(() => {});
-    tryPlay();
     heroVideo.addEventListener('loadeddata', tryPlay);
     heroVideo.addEventListener('canplay', tryPlay);
 
+    // fallback in case someone interacts with the page before the welcome click somehow
     const resumeOnInteraction = () => {
       tryPlay();
       window.removeEventListener('touchstart', resumeOnInteraction);
-      window.removeEventListener('click', resumeOnInteraction);
       window.removeEventListener('scroll', resumeOnInteraction);
     };
     window.addEventListener('touchstart', resumeOnInteraction, { once: true, passive: true });
-    window.addEventListener('click', resumeOnInteraction, { once: true });
     window.addEventListener('scroll', resumeOnInteraction, { once: true, passive: true });
   }
+
+  // ---- welcome / click-to-enter overlay ----
+  // Lock scroll until they click through, then dismiss the overlay and
+  // start the video on that exact click — a real user gesture guarantees
+  // playback starts on every browser, no exceptions. Once playing, the
+  // video keeps looping on its own regardless of scrolling.
+  document.body.style.overflow = 'hidden';
+  const welcomeOverlay = document.getElementById('welcomeOverlay');
+  const welcomeEnterBtn = document.getElementById('welcomeEnterBtn');
+  welcomeEnterBtn.addEventListener('click', () => {
+    if (heroVideo) heroVideo.play().catch(() => {});
+    welcomeOverlay.classList.add('hide');
+    document.body.style.overflow = '';
+  });
 
   const roleGrid = document.getElementById('roleGrid');
   const roleSelect = document.getElementById('role');
