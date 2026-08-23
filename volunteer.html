@@ -50,8 +50,7 @@
     backdrop-filter: blur(10px);
   }
   .brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
-  .brand img { width: 42px; height: 42px; object-fit: contain; flex-shrink: 0; }
-  .brand strong { color: var(--white); font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand img { height: 40px; width: auto; flex-shrink: 1; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 22px; border-radius: 100px;
@@ -96,6 +95,15 @@
     color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 6px;
   }
   .scroll-hint svg { width: 18px; height: 18px; animation: bob 1.8s ease-in-out infinite; }
+  .mute-toggle {
+    position: absolute; bottom: 28px; right: 28px; z-index: 2;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .mute-toggle:hover { background: rgba(255,255,255,0.26); transform: translateY(-2px); }
+  .mute-toggle svg { width: 19px; height: 19px; }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
   /* ---------- section shell ---------- */
@@ -190,7 +198,7 @@
   }
   .welcome-overlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
   .welcome-card { max-width: 460px; }
-  .welcome-card img { width: 68px; height: 68px; object-fit: contain; margin-bottom: 20px; }
+  .welcome-card img { width: min(260px, 70vw); height: auto; margin-bottom: 24px; }
   .welcome-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.3);
@@ -211,7 +219,7 @@
     .why-grid, .role-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
-    .brand strong { display: none; }
+    .brand img { height: 32px; }
     .btn { padding: 9px 16px; font-size: 0.8rem; }
     section.block { padding: 64px 6vw; }
     .why-grid, .role-grid { grid-template-columns: 1fr; }
@@ -236,7 +244,6 @@
 <header class="topbar">
   <div class="brand">
     <img src="images/logo.png" alt="Malichis Sickle Cell Foundation logo">
-    <strong>Malichis Sickle Cell Foundation</strong>
   </div>
   <a class="btn btn-light" href="index.html">← Back to site</a>
 </header>
@@ -254,6 +261,10 @@
       <a href="#roles" class="btn btn-light">See the Roles</a>
     </div>
   </div>
+  <button class="mute-toggle" id="muteToggle" aria-label="Toggle sound">
+    <svg id="muteIconOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg>
+    <svg id="muteIconOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+  </button>
   <div class="scroll-hint">
     Scroll to learn more
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -407,6 +418,24 @@
   // last-resort fallback — the video is always muted, so this is allowed
   // everywhere without needing a user-facing "play" button.
   const heroVideo = document.getElementById('heroVideo');
+  const muteToggle = document.getElementById('muteToggle');
+  const muteIconOn = document.getElementById('muteIconOn');
+  const muteIconOff = document.getElementById('muteIconOff');
+
+  function updateMuteIcon() {
+    if (!heroVideo) return;
+    muteIconOn.style.display = heroVideo.muted ? 'none' : 'block';
+    muteIconOff.style.display = heroVideo.muted ? 'block' : 'none';
+  }
+
+  if (muteToggle) {
+    muteToggle.addEventListener('click', () => {
+      if (!heroVideo) return;
+      heroVideo.muted = !heroVideo.muted;
+      updateMuteIcon();
+    });
+  }
+
   if (heroVideo) {
     heroVideo.muted = true;
     heroVideo.playsInline = true;
@@ -434,7 +463,18 @@
   const welcomeOverlay = document.getElementById('welcomeOverlay');
   const welcomeEnterBtn = document.getElementById('welcomeEnterBtn');
   welcomeEnterBtn.addEventListener('click', () => {
-    if (heroVideo) heroVideo.play().catch(() => {});
+    if (heroVideo) {
+      heroVideo.muted = false;
+      heroVideo.play().catch(() => {
+        // some browsers still refuse unmuted playback even after a click —
+        // fall back to muted so the video at least plays, and let the
+        // mute toggle button offer sound on demand instead
+        heroVideo.muted = true;
+        heroVideo.play().catch(() => {});
+        updateMuteIcon();
+      });
+      updateMuteIcon();
+    }
     welcomeOverlay.classList.add('hide');
     document.body.style.overflow = '';
   });
